@@ -36,7 +36,7 @@
 \newtheorem{statement}{Утверждение}
 \newtheorem{lemma}{Лемма}
 \theoremstyle{definition}
-\newtheorem{example}{Пример}[section]
+\newtheorem{example}{Пример}%[section] Figure a way for proper example numbering
 
 \renewcommand{\thesubsection}{\S\arabic{section}.\arabic{subsection}}
 \renewcommand{\thesection}{Глава \arabic{section}.}
@@ -502,7 +502,102 @@
 			Таким образом, будет образовано не более $k_1\cdot k_0$ новых конъюнкций, и если длина исходной ДНФ равна $k$, то получаем оценку $O(k^2).$
 
 %\newpage
-\section{Условия на образование единичной конъюнкции}
+\subsection{Случай двух переменных}
+			Пусть существуют две переменные, не ограничивая общности, $x_1$ и $x_2$, которые встречаются в записи $D$ в обеих степенях.\par
+			Рассмотрим общий вид ДНФ $D$:
+			$$
+				\bigvee_ix_1A_i \vee \bigvee_i\bar{x}_1B_i \vee \bigvee_ix_2C_i \vee \bigvee_i\bar{x}_2D_i \vee \bigvee_ix_1x_2E_i \vee \bigvee_ix_1\bar{x}_2F_i \vee \bigvee_i\bar{x}_1x_2G_i \vee \bigvee_i\bar{x}_1\bar{x}_2H_i \vee \bigvee_iI_i,
+			$$
+			где $A_i, \ldots, I_i$ не содержат переменных $x_1, x_2.$\par
+			Будем применять правило Блейка сначала ко всем парам конъюнкций вида\\$x_i^{\sigma_i}P \vee x_i^{1-\sigma_i}x_j^{\delta_j}Q,\, i,j\in\{1, 2\}$:
+			$$
+				x_i^{\sigma_i}P \vee x_i^{1-\sigma_i}x_j^{\sigma_j}Q = x_i^{\sigma_i}P \vee x_i^{1-\sigma_i}x_j^{\sigma_j}Q \vee x_j^{\sigma_j}PQ,\qquad(1)
+			$$
+			в результате чего образуются новые конъюнкции с участием переменной $x_j^{\sigma_j},$ которые впоследствии также могут участвовать в образовании новых конъюнкций.\par
+			После того как правило (1) больше неприменимо, выполним все возможные преобразования вида:
+			$$
+				x_iP \vee \bar{x}_iQ = x_iP \vee \bar{x}_iQ \vee PQ,\qquad(2)
+			$$
+			в результате которых образуются конъюнкции, в которые переменные $x_1$ и $x_2$ не входят.\par
+			Будем рассматривать случай, когда в исходную ДНФ $D$ входит одинаковое число $k$ конъюнкций вида $x_1^{\sigma_1}x_2^{\sigma_2}$ и по $m$ конъюнкций вида $x_i^{\sigma_i}$. Если их встречалось разное число, то положим $k$ или $m$ равным максимальному из них и получим оценку сверху, поскольку чем больше изначально было конъюнкций, тем большее число раз применимо правило Блейка и, следовательно, в ходе метода будет образовано не меньше конъюнкций.\par
+			Назовём этапом метода Блейка применение правила (1) к образованным на предыдущем этапе конъюнкциям, содержащим $x_j^{\delta_j}$, в паре с $x_1^{\sigma_1}x_2^{\sigma_2}$ из исходной ДНФ.
+			\begin{table}[H]
+				\centering
+				\begin{tabular}{|c|p{4in}|c|}
+					\hline
+					Этап & Вид образованных конъюнкций & Число различных конъюнкций\\
+					\hline
+					\multirow{2}{*}{1} & $x_1CF$ $\bar{x}_1CH$ $x_1DE$ $\bar{x}_1DG$ $x_1EF$ $\bar{x}_1GH$ \vspace{5pt}& \multirow{2}{*}{$2 \times 6$}\\
+					&$x_2AG$ $\bar{x}_2AH$ $x_2BE$ $\bar{x}_2BF$ $x_2EG$ $\bar{x}_2FH$&\\
+					\hline
+					\multirow{2}{*}{2} & $x_1AFG$ $\bar{x}_1AGH$ $x_1AEH$ $x_1BEF$ $\bar{x}_1BEH$ $\bar{x}_1BFG$ $x_1EFG$ $\bar{x}_1EGH$ $x_1EFH$ $\bar{x}_1FGH$ \vspace{5pt} & \multirow{2}{*}{$2 \times 10$}\\
+					&$x_2CFG$ $\bar{x}_2CFH$ $x_2CEH$ $x_2DEG$ $\bar{x}_2DEH$ $\bar{x}_2DFG$ $x_2EFG$ $\bar{x}_2EFH$ $x_2EGH$ $\bar{x}_2FGH$&\\
+					\hline
+					\multirow{2}{*}{3} & $x_1CFG$ $\bar{x}_1CFGH$ $x_1CEFH$ $\bar{x}_1CEH$ $x_1DEFG$ $\bar{x}_1DEGH$ $x_1DEH$ $\bar{x}_1DFG$ $\bar{x}_1EFGH$ $x_1EFGH$\vspace{5pt} & \multirow{2}{*}{$2 \times 10$}\\
+					&$x_2AFG$ $\bar{x}_2AFGH$ $x_2AEGH$ $\bar{x}_2AEH$ $x_2BEFG$ $\bar{x}_2BEFH$ $x_2BEH$ $\bar{x}_2BFG$ $\bar{x}_2EFGH$ $x_2EFGH$&\\
+					\hline
+					\multirow{2}{*}{4} & $\bar{x}_1AFGH$ $x_1AEFGH$ $\bar{x}_1AEGH$ $x_1BEFG$ $\bar{x}_1BEFGH$ $x_1BEFH$ \vspace{5pt} & \multirow{2}{*}{$2 \times 6$}\\
+					&$\bar{x}_2CFGH$ $x_2CEFGH$ $\bar{x}_2CEFH$ $x_2DEFG$ $\bar{x}_2DEFGH$ $x_2DEGH$&\\
+					\hline
+					\multirow{2}{*}{5} & $x_1CEFGH$ $\bar{x}_1CEFGH$ $\bar{x}_1DEFGH$ $x_1DEFGH$ \vspace{5pt} & \multirow{2}{*}{$2 \times 4$}\\
+					&$x_2AEFGH$ $\bar{x}_2AEFGH$ $\bar{x}_2BEFGH$ $x_2BEFGH$&\\
+					\hline
+					\multirow{2}{*}{6} & $\bar{x}_1AEFGH$ $x_1BEFGH$ \vspace{5pt} & \multirow{2}{*}{$2 \times 2$}\\
+					&$\bar{x}_2CEFGH$ $x_2DEFGH$ &\\
+					\hline
+				\end{tabular}
+				\caption{$k = 1$}
+			\end{table}\par
+			Формулы симметричны по переменным $x_1, \bar{x}_1, x_2, \bar{x}_2.$\par
+			Здесь $A, \ldots, H$ --- реализация одного из вариантов $A_i, \ldots, H_i$ из исходной ДНФ.\par
+			Каждое из выражений $A, B, C$ или $D$ может входить в конъюнкцию с переменной $x_i^{\sigma_i}$ максимум один раз: применение правила Блейка с конъюнкциями вида $x_1A,\,\bar{x}_1B, \,x_2C, \,\bar{x}_2D$ осуществляется только 1-м этапе. \par
+			Число этапов: $4k + 2.$\par
+			Буква $E, F, G$ или $H$, вошедшая в описание вида конъюнкции, может удвоиться только через шаг: повторное применение правило Блейка с той же конъюнкцией невозможно.\par
+			Таким образом, впервые в описание конъюнкции $t$ одинаковых букв входят на $(1 + 2(t - 1))$-м этапе.\par
+			До шага $2k$ любое применение правила (1) давало увеличение числа букв, однако когда все варианты задействованы, добавлять больше нечего.\par
+			Число видов конъюнкций на этапе $n:$ 
+			$$
+				\begin{cases}
+					(1 + 2n)\times4, \text{если $n \leqslant 2k,$}\\
+					(1 + 2(4k + 1 - n))\times4 \text{ иначе.}
+				\end{cases}
+			$$\par
+			Число видов конъюнкций на этапе $n$, в которые входит выражение $A, B, C$ или $D:$ $(n + 1)\times4.$\par
+			Число видов конъюнкций на этапе $n$, в которые не входит выражение $A, B, C$ или $D:$ $n\times4.$\par
+			Максимальная длина конъюнкции на $n$-м этапе: $\min(n + 1, 1 + 4k)$.\par
+			Максимальное число различных видов конъюнкций образуется на этапах $n = 2k$ и $n = 2k + 1$.\par
+			Оценим сверху число конъюнкций, образованных на этапе $n \leqslant 2k:$ $4(1 + 2n) \times k^{n + 1}$, где $k^{n + 1}$ --- верхняя оценка на число различных вариантов реализаций конъюнкции определённого вида.\par
+			%Максимальное разнообразие возникает при $n = 2k:$ $C_k^{\frac{k}{2}}.$\par
+			При $n > 2k$ число симметрично убывает.\par
+			%Оценка сверху:
+			%$$
+			%	\sum_{n = 1}^{2k}4(1 + 2n) k^{n + 1} + \sum_{n = 2k + 1}^{4k}4(1 + 2(4k + 1 - n)) k^{n + 1} =
+			%$$
+			%$$
+			%	= \frac{4 k^2 (3-k-3 k^{2 k}-3 k^{1+2 k}+4 k^{2+2 k})}{(k - 1)^2} + \frac{4 k^{2k + 2} (-1+3 k-4 k^2+k^{2 k}+k^{2k + 1})}{(k - 1)^2} = O(k^{4k})
+			%$$\par
+			%После преобразований вида (2) получим окончательную оценку $O(k^{8k}).$\vspace{20pt}\par
+			Покажем, что возможно образование любой конъюнкции вида:
+			$$
+			x_i^{\sigma_i} \underbrace{E_1\ldots E_{k_E}}_{1\leqslant k_E \leqslant k}\underbrace{F_1\ldots F_{k_F}}_{1\leqslant k_F \leqslant k}\underbrace{G_1\ldots G_{k_G}}_{1\leqslant k_G \leqslant k}\underbrace{H_1\ldots H_{k_H}}_{1\leqslant k_H \leqslant k}$$\par
+			На первом этапе была образована конъюнкция $x_1E_1F_1.$
+			\begin{enumerate}\itemsep=0pt
+				\item
+				$x_1E_1F_1 \vee \bar{x}_1x_2G_1 = x_1E_1F_1 \vee \bar{x}_1x_2G_1 \vee x_2E_1F_1G_1$
+				\item
+				$x_2E_1F_1G_1 \vee \bar{x}_1\bar{x}_2H_1 = x_2E_1F_1G_1 \vee \bar{x}_1\bar{x}_2H_1 \vee \bar{x}_1E_1F_1G_1H_1$
+				\item
+				$\bar{x}_1E_1F_1G_1H_1 \vee x_1x_2E_2 = \bar{x}_1E_1F_1G_1H_1 \vee x_1x_2E_2 \vee x_2E_1E_2F_1G_1H_1$
+				\item
+				$x_2E_1E_2F_1G_1H_1 \vee x_1\bar{x}_2F_2 = x_2E_1E_2F_1G_1H_1 \vee x_1\bar{x}_2F_2 \vee x_1E_1E_2F_1F_2G_1H_1$
+			\end{enumerate}
+			и т.д. необходимое число раз.\par
+			Аналогичным образом могут быть получены конъюнкции, в которые входит одно из выражений $A, B, C$ или $D.$\par
+			При добавлении случая, когда какие-либо из $k_E, k_F, k_G, k_H$ равны 0, такая запись охватывает все возможные реализации на всех этапах. Оценим число этих реализаций: $4 \times (4m + 1) \times 2^k2^k2^k2^k = O(m2^{4k}).$\par
+			После преобразований вида (2) получим следующую оценку на общее число образованных конъюнкций: $4\times (4m + 1)2^{4k} + 2\times m(m + 2^{4k}) + 2\times 2^{4k} = O(m^2 + m2^{4k}) = O(r2^r),$ cчитая, что длина исходной ДНФ $r$ и $m = O(r)$ и $k = O(r).$ \par
+			Исходя из вида оценки, можно сделать вывод о том, что наибольшее число конъюнкций при фиксированной длине $r = 4k + 4m + t$ исходной ДНФ образуется при $m = 0$ и $k = \frac{r}{4},$ а минимальное в нетривиальном случае при $k = 1$ и $m = \frac{r}{4} - 1.$\par
+			Перейдём к рассмотрению случая образования наибольшего числа новых конъюнкций.\par
+	\subsubsection{Условия на образование единичной конъюнкции}
 		Пусть заданы $n$ --- число переменных, конъюнкция $K = x_1\ldots x_q$ ранга $q$ (с помощью замены переменных всегда можно добиться представления в таком виде) и ДНФ $\bigvee\limits_iK'_i.$\par
 		В ходе применения критерия поглощения после удаления букв, входящих в конъюнкцию $K$, образована ДНФ $D = \bigvee\limits_{i = 1}^rK_i,$ в которую входят $2n - q$ различных букв: $\bar{x}_1,\ldots,\bar{x}_n, x_{q + 1},\ldots, x_n$.\par
 		В ходе метода Блейка для ДНФ $D$ правило Блейка может быть применено к парам конъюнкций, содержащим только переменные $x_{q+1}$ и $\bar{x}_{q+1}$, $\ldots$, $x_{n}$ и $\bar{x}_{n},$ остальные же могут встречаться в $D$ только в одной степени. Т.е. не более $n - q$ переменных встречаются в $D$ в обоих степенях.\par
@@ -544,6 +639,298 @@
 		\end{minipage}
 		Остальные условия (т.е. случай образования $x_{n - 1}$ или $\bar{x}_{n - 1}$ после цепочки из 2-х применений правила Блейка) избыточны, т.к. включают в себя хотя бы одно из перечисленных выше.\par
 		Таким образом достаточно провести только первые 2 этапа метода Блейка, чтобы понять, будет ли образована единичная конъюнкция.
+	\subsubsection{Оценка числа образованных конъюнкций в ходе метода Блейка для ДНФ специального вида}
+			Зафиксируем параметр $s$ и пусть в ходе критерия поглощения получена ДНФ
+			$$
+				D = \bigvee\limits_{i = 1}^{s_1}x_1x_2x_{i +2} \vee \bigvee\limits_{i = 1}^{s_2}x_1\bar{x}_2x_{i + s_1 + 2} \vee \bigvee\limits_{i = 1}^{s_3}\bar{x}_1x_2x_{i + s_1 + s_2 + 2} \vee \bigvee\limits_{i = 1}^{s_4}\bar{x}_1\bar{x}_2x_{i + s_1 + s_2 + s_3 + 2},
+			$$
+			$$
+				s_1 + s_2 + s_3 + s_4 = 4s,
+			$$
+			где переменные $x_i, i = \overline{3,\,4s+2},$ встречаются только в одной степени. Её длина $L(D) = 4s.$\par
+			Покажем, что максимальное число новых конъюнкций в ходе метода Блейка, применённого к ДНФ $D$, образуется в случае $s_1 = s_2 = s_3 = s_4 = s.$\par
+			$1^{\circ}.$ Пусть хотя бы одно из $s_1, s_2, s_3$ или $s_4$ равно 0.\par
+			$1.1^{\circ}.$ Пусть ровно один параметр равен нулю, для определённости, $s_1 = 0,$ т.е. в $D$ нет конъюнкций вида $x_1x_2A,$ и
+			$$D = \bigvee_ix_1\bar{x}_2B_i \vee \bigvee_i\bar{x}_1\bar{x}_2C_i \vee \bigvee_i\bar{x}_1\bar{x}_2D_i,$$
+			где $B_i \in \{x_{s_1 + 3}, \ldots, x_{s_1 + s_2 + 2}\}, C_i \in \{x_{s_1 + s_2 + 3}, \ldots, x_{s_1 + s_2 + s_3 + 2}\}, D_i \in \{x_{s_1 + s_2  + s_3 + 3}, \ldots, x_{4s + 2}\}.$\par
+			Правило Блейка, применённое к исходным конъюнкциям, порождает следующие:\par
+			а) $x_1\bar{x}_2B_i \vee \bar{x}_1\bar{x}_2D_i = x_1\bar{x}_2B_i \vee \bar{x}_1\bar{x}_2D_i \vee \bar{x}_2B_iD_i$\par
+			б) $\bar{x}_1x_2C_i \vee \bar{x}_1\bar{x}_2D_i = \bar{x}_1x_2C_i \vee \bar{x}_1\bar{x}_2D_i \vee \bar{x}_1C_iD_i$\par
+			Возможные варианты правила Блейка, применённого к ним в паре с конъюнкциями из исходной ДНФ $D:$\par
+			а) $\bar{x}_1C_iD_i \vee x_1\bar{x}_2B_i = \bar{x}_1C_iD_i \vee x_1\bar{x}_2B_i \vee \bar{x}_2B_iC_iD_i$\par
+			б) $\bar{x}_2B_iD_i \vee \bar{x}_1x_2C_i = \bar{x}_2B_iD_i \vee \bar{x}_1x_2C_i \vee \bar{x}_1B_iC_iD_i$\par
+			Образованные конъюнкции содержат переменные $x_1$ и $x_2$ только в отрицательной степени, и, следовательно, не могут больше образовывать новые конъюнкции в паре с конъюнкциями вида $\bar{x}_1\bar{x}_2D_i.$ Более того, конъюнкций без переменных $x_1$ и $x_2$ быть образовано не может: для этого понадобились бы конъюнкции вида $x_1P$ и $x_2Q.$\par
+			Все возможные новые конъюнкции:
+			$$
+				\bar{x}_1CD, \quad \bar{x}_1\underbrace{B_1\ldots B_{s_B}}_{1 \leqslant s_B \leqslant s_2}\underbrace{C_1\ldots C_{s_C}}_{1 \leqslant s_C \leqslant s_3}D,$$
+			$$
+				 \bar{x}_2BD, \quad\bar{x}_2\underbrace{B_1\ldots B_{s_B}}_{1 \leqslant s_B \leqslant s_2}\underbrace{C_1\ldots C_{s_C}}_{1 \leqslant s_C \leqslant s_3}D
+			$$\par
+			Подсчитаем их число: $\underbrace{s_3s_4 + (2^{s_2} - 1)(2^{s_3} - 1)s_4}_{\bar{x}_1} + \underbrace{s_2s_4 + (2^{s_2} - 1)(2^{s_3} - 1)s_4}_{\bar{x}_2} = \underline{O}(s2^{2s}),$ что уступает оценке из пункта $2^{\circ}.$\par
+			$1.2^{\circ}.$ Пусть два параметра равны нулю.\par
+			Если оставшиеся конъюнкции имеют вид $x_1^{\sigma_1}x_2^{\sigma_2}$ и $x_1^{1 - \sigma_1}x_2^{1 - \sigma_2},$ то новых конъюнкций образовано не будет.\par
+			В противном случае, если только одна из переменных $x_1$ или $x_2$ встречается в обоих степенях, то число новых конъюнкций равно $s_is_j,$ где $i$ и $j$ --- индексы оставшихся групп.\par
+			$1.3^{\circ}.$ Если какие-либо три параметра $s_i, i\in\{1,4\},$ равны нулю, то, очевидно, новых конъюнкций образовано не будет.\par
+			$2^{\circ}.$ Пусть $s_1, s_2, s_3, s_4 > 0$ и
+			$$D =\bigvee_ix_1x_2A_i \vee \bigvee_ix_1\bar{x}_2B_i \vee \bigvee_i\bar{x}_1\bar{x}_2C_i \vee \bigvee_i\bar{x}_1\bar{x}_2D_i,$$
+			где $A_i \in \{x_3,\ldots,x_{s_1 + 2} \}, B_i \in \{x_{s_1 + 3}, \ldots, x_{s_1 + s_2 + 2}\}, C_i \in \{x_{s_1 + s_2 + 3}, \ldots, x_{s_1 + s_2 + s_3 + 2}\}$,\\$D_i \in \{x_{s_1 + s_2  + s_3 + 3}, \ldots, x_{4s + 2}\}.$\par
+%			По рассмотренному ранее все возможные новые образованные конъюнкции:
+%			$$
+%				\bar{x}_1CD, \bar{x}_1ACD, \bar{x}_1BCD
+%			$$
+%			$$
+%				x_2AC, x_2ABC, x_2ACD
+%			$$
+%			$$
+%				\bar{x}_2BD, \bar{x}_2ABD, \bar{x}_2BCD
+%			$$
+			
+			Поскольку ранее было доказано, что образуются все конъюнкции вида
+			\begin{equation}
+				x_i^{\sigma} \underbrace{A_1\ldots A_{s_A}}_{1\leqslant s_A \leqslant s_1}\underbrace{B_1\ldots B_{s_B}}_{1\leqslant s_B \leqslant s_2}\underbrace{C_1\ldots C_{s_C}}_{1\leqslant s_C \leqslant s_3}\underbrace{D_1\ldots D_{s_D}}_{1\leqslant s_D \leqslant s_4}, i\in\{1,2\},\sigma\in\{0,1\},
+			\end{equation}\\
+			исследуем те, в которые не входят все 4 буквы $A, B, C, D,$ т.е. в цепочке из применений правила Блейка участвуют конъюнкции не из всех четырёх групп.
+			\begin{table}[H]
+				\centering
+				\begin{tabular}{|c|p{4in}|}
+					\hline
+					Этап & Вид образованных конъюнкций\\
+					\hline
+					1 & $x_1AB$ $\bar{x}_1CD$ $x_2AC$ $\bar{x}_2BD$\\
+					\hline
+					\multirow{2}{*}{2} & $x_1ABC$ $x_1ABD$ $\bar{x}_1ACD$ $\bar{x}_1BCD$ \vspace{5pt}\\
+					 & $x_2ABC$ $x_2ACD$ $\bar{x}_2ABD$ $\bar{x}_2BCD$\\
+					\hline
+					\multirow{2}{*}{3} & $x_1ABBC$ $x_1AABD$ $\bar{x}_1ACDD$ $\bar{x}_1BCCD$ \vspace{5pt}\\
+					 & $x_2ABCC$ $x_2AACD$ $\bar{x}_2ABDD$ $\bar{x}_2BBCD$\\
+					\hline
+					\multirow{2}{*}{4} & $x_1ABBCC$ $x_1AABDD$ $\bar{x}_1AACDD$ $\bar{x}_1BBCCD$ \vspace{5pt}\\
+					 & $x_2ABBCC$ $x_2AACDD$ $\bar{x}_2AABDD$ $\bar{x}_2BBCCD$\\
+					\hline
+					\multicolumn{2}{|c|}{и т.д.}\\
+					\hline
+				\end{tabular}
+				\captionsetup{justification=centering}
+				\caption{Вид конъюнкций, в которые не входят переменные из всех 4-х групп одновременно}
+			\end{table}\par
+			Таким образом, новые конъюнкции, в которые входят переменные $x_1, x_2,$ имеют вид:
+			$$
+				x_1AB, \quad x_1A\underbrace{B_1\ldots B_{s_B}}_{1 \leqslant s_B \leqslant s_2}\underbrace{C_1\ldots C_{s_C}}_{1 \leqslant s_C \leqslant s_3}, \quad x_1\underbrace{A_1\ldots A_{s_A}}_{1 \leqslant s_A \leqslant s_1}B\underbrace{D_1\ldots D_{s_D}}_{1 \leqslant s_D \leqslant s_4}
+			$$
+			$$
+				\bar{x}_1CD, \quad \bar{x}_1\underbrace{A_1\ldots A_{s_A}}_{1 \leqslant s_A \leqslant s_1}C\underbrace{D_1\ldots D_{s_D}}_{1 \leqslant s_D \leqslant s_4}, \quad 
+\bar{x}_1\underbrace{B_1\ldots B_{s_B}}_{1 \leqslant s_B \leqslant s_2}\underbrace{C_1\ldots C_{s_C}}_{1 \leqslant s_C \leqslant s_3}D
+			$$
+			$$
+				x_2AC, \quad x_2A\underbrace{B_1\ldots B_{s_B}}_{1 \leqslant s_B \leqslant s_2}\underbrace{C_1\ldots C_{s_C}}_{1 \leqslant s_C \leqslant s_3}, \quad x_2\underbrace{A_1\ldots A_{s_A}}_{1 \leqslant s_A \leqslant s_1}C\underbrace{D_1\ldots D_{s_D}}_{1 \leqslant s_D \leqslant s_4}
+			$$
+			$$
+				\bar{x}_2BD, \quad \bar{x}_2\underbrace{A_1\ldots A_{s_A}}_{1 \leqslant s_A \leqslant s_1}B\underbrace{D_1\ldots D_{s_D}}_{1 \leqslant s_D \leqslant s_4}, \quad \bar{x}_2\underbrace{B_1\ldots B_{s_B}}_{1 \leqslant s_B \leqslant s_2}\underbrace{C_1\ldots C_{s_C}}_{1 \leqslant s_C \leqslant s_3}D
+			$$\\
+			и (1): $\qquad\quad\,\, x_i^{\sigma} \underbrace{A_1\ldots A_{s_A}}_{1\leqslant s_A \leqslant s_1}\underbrace{B_1\ldots B_{s_B}}_{1\leqslant s_B \leqslant s_2}\underbrace{C_1\ldots C_{s_C}}_{1\leqslant s_C \leqslant s_3}\underbrace{D_1\ldots D_{s_D}}_{1\leqslant s_D \leqslant s_4}, i\in\{1,2\},\sigma\in\{0,1\}$.\par
+			Заметим, что для любой пары конъюнкций вида $x_i^{\sigma}P \vee x_i^{1 - \sigma}Q, i\in\{1, 2\},\sigma\in\{0,1\},$ где $P$ и $Q$ не содержат букв $x_1, \bar{x}_1, x_2, \bar{x}_2,$ конъюнкция $PQ$ содержит буквы из всех четырёх групп переменных. В силу реализации всех конъюнкций (1) могут образоваться любые конъюнкции вида $\underbrace{A_1\ldots A_{s_A}}_{1\leqslant s_A \leqslant s_1}\underbrace{B_1\ldots B_{s_B}}_{1\leqslant s_B \leqslant s_2}\underbrace{C_1\ldots C_{s_C}}_{1\leqslant s_C \leqslant s_3}\underbrace{D_1\ldots D_{s_D}}_{1\leqslant s_D \leqslant s_4}$ и только они, поэтому можно точно подсчитать их число: $(2^{s_1} - 1) \times (2^{s_2} - 1) \times(2^{s_3} - 1) \times (2^{s_4} - 1).$\par
+			Подсчитаем общее число новых образованных конъюнкций:
+			$$
+				\underbrace{s_1s_2 + s_1(2^{s_2} - 1)(2^{s_3} - 1) + (2^{s_1} - 1)s_2(2^{s_4} - 1)}_{x_1} + \underbrace{s_3s_4 + (2^{s_1} - 1)s_3(2^{s_4} - 1) + (2^{s_2} - 1)(2^{s_3} - 1)s_4}_{\bar{x}_1} +$$
+			$$+ \underbrace{s_1s_3 + s_1(2^{s_2} - 1)(2^{s_3} - 1) + (2^{s_1} - 1)s_3(2^{s_4} - 1)}_{x_2} + \underbrace{s_2s_4 + (2^{s_1} - 1)s_2(2^{s_4} - 1) + (2^{s_2} - 1)(2^{s_3} - 1)s_4}_{\bar{x}_2} +$$
+			$$+ \underbrace{4\times(2^{s_1} - 1)  (2^{s_2} - 1) (2^{s_3} - 1)  (2^{s_4} - 1)}_{(1)} + \underbrace{(2^{s_1} - 1)  (2^{s_2} - 1) (2^{s_3} - 1)  (2^{s_4} - 1)}_{\text{без } x_1, x_2}$$\par
+			Максимизируя приведённое выражение при условии $s_1 + s_2 + s_3 + s_4 = 4s,$ получим, что наибольшее значение достигается при симметричном варианте $s_1 = s_2 = s_3 = s_4 = s.$
+			\begin{table}[H]
+				\centering
+				\begin{tabular}{|c|c|c|}
+					\hline
+					$s$ & $n$ & Число новых конъюнкций\\
+					\hline
+					1 & 6 & 17\\
+					\hline
+					2 & 10 & 565\\
+					\hline
+					3 & 14 & 13217\\
+					\hline
+				\end{tabular}
+				\caption*{Примеры для $s = 1, 2, 3$}
+			\end{table}\par
+			Обозначим
+			$$
+				f(\overline{s}) = s_1s_2 + s_1(2^{s_2} - 1)(2^{s_3} - 1) + (2^{s_1} - 1)s_2(2^{s_4} - 1) + s_3s_4 + (2^{s_1} - 1)s_3(2^{s_4} - 1) + (2^{s_2} - 1)(2^{s_3} - 1)s_4 + $$ $$ +s_1s_3 + s_1(2^{s_2} - 1)(2^{s_3} - 1) + (2^{s_1} - 1)s_3(2^{s_4} - 1) + s_2s_4 + (2^{s_1} - 1)s_2(2^{s_4} - 1) + (2^{s_2} - 1)(2^{s_3} - 1)s_4 +$$ $$ +5(2^{s_1} - 1)  (2^{s_2} - 1) (2^{s_3} - 1)  (2^{s_4} - 1).
+			$$\par
+			$f$ --- гладкая функция.\par
+			Поставим задачу оптимизации:
+			$$
+				\begin{cases}
+					f(\overline{s}) \rightarrow \max\\
+					s_1 + s_2 + s_3 + s_4 = 4s
+				\end{cases} (2)
+			$$\par
+			Функция Лагранжа имеет вид
+			$$
+				\mathcal{L}(\overline{s};\lambda) = f(\overline{s}) - \lambda(s_1 + s_2 + s_3 + s_4 - 4s),
+			$$
+			и она, как и $f,$ симметрична по переменным $s_1, s_2, s_3, s_4.$
+			$$
+				\begin{cases}
+					\frac{\partial\mathcal{L}}{\partial s_1} = s_2 + s_3 + 2(2^{s_2} - 1)(2^{s_3} - 1) + \ln(2) 2^{s_1}(2^{s_4} - 1)(2(s_2 + s_3) + 5(2^{s_2} - 1)(2^{s_3} - 1)) - \lambda= 0\\
+					\frac{\partial\mathcal{L}}{\partial s_2} = \frac{\partial\mathcal{L}}{\partial s_3} = \frac{\partial\mathcal{L}}{\partial s_4} = 0 \text{ (имеют аналогичный вид)}\\
+					s_1 + s_2 + s_3 + s_4 = 4s
+				\end{cases}(3)
+			$$\par
+			Если положить
+			$$
+				\begin{cases}
+					s_1 = s_2 = s_3 = s_4 = s\\
+					\lambda = 2s + 2(2^s - 1)^2 + \ln(2)2^s(2^s - 1)(4s + 5(2^s - 1)^2)
+				\end{cases},
+			$$
+			то это решение удовлетворяет системе (3): все уравнения вида $\frac{\partial\mathcal{L}}{\partial s_i},i=\overline{1,4},$ при равенстве $s$ совпадают и дают выражение для $\lambda$. Значит, представленные $(\overline{s}, \lambda)$ --- седловая точка функции Лагранжа и, соответственно, $\overline{s}$ --- решение (2).
+			$$
+				f(s,s,s,s) = 4s^2 + 8s(2^s - 1)^2 + 5(2^s - 1)^4
+			$$\par
+			Перейдём к рассмотрению более общего случая $D:$
+			$$
+				\bigvee_{i = 1}^{t_1}x_1A_i \vee \bigvee_{i = 1}^{t_2}\bar{x}_1B_i \vee \bigvee_{i = 1}^{t_3}x_2C_i \vee \bigvee_{i = 1}^{t_4}\bar{x}_2D_i \vee \bigvee_{i = 1}^{s_1}x_1x_2E_i \vee \bigvee_{i = 1}^{s_2}x_1\bar{x}_2F_i \vee \bigvee_{i = 1}^{s_3}\bar{x}_1x_2G_i \vee \bigvee_{i = 1}^{s_4}\bar{x}_1\bar{x}_2H_i \vee \bigvee_iI_i.
+			$$\par
+			Будем исследовать число новых конъюнкций, которые не исследованы в предыдущем случае, т.е. таких, в которые входят переменные из первых четырёх групп.\par
+			Поскольку ранее было доказано, что образуются все конъюнкции вида
+			\begin{equation}
+				x_i^{\sigma} P \underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}, i\in\{1,2\},\sigma\in\{0,1\}, P \in \{A, B, C, D\},
+			\end{equation}\\
+			исследуем те, в которые не входят все 4 буквы $E, F, G, H.$\par
+			Можно выписать вид таких конъюнкций:
+			$$
+			A\begin{cases}
+\begin{matrix}x_1\\x_2\end{matrix} A\underbrace{F_1\ldots F_{s_F}}_{1 \leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1 \leqslant s_G \leqslant s_3} \quad
+ \begin{matrix}x_1\\\bar{x}_2\end{matrix} A\underbrace{E_1\ldots E_{s_E}}_{1 \leqslant s_E \leqslant s_1}\underbrace{H_1\ldots H_{s_H}}_{1 \leqslant s_H \leqslant s_4} \\
+ \begin{matrix}\bar{x}_1\\x_2\end{matrix} A\underbrace{E_1\ldots E_{s_E}}_{1 \leqslant s_E \leqslant s_1}G\underbrace{H_1\ldots H_{s_H}}_{1 \leqslant s_H \leqslant s_4} \quad
+\begin{matrix}\bar{x}_1\\\bar{x}_2\end{matrix} A\underbrace{F_1\ldots F_{s_F}}_{1 \leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1 \leqslant s_G \leqslant s_3}H
+			\end{cases}
+			$$
+			$$
+			B\begin{cases}
+\begin{matrix}x_1\\x_2\end{matrix} BE\underbrace{F_1\ldots F_{s_F}}_{1 \leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1 \leqslant s_G \leqslant s_3} \quad
+ \begin{matrix}x_1\\\bar{x}_2\end{matrix} B\underbrace{E_1\ldots E_{s_E}}_{1 \leqslant s_E \leqslant s_1}F\underbrace{H_1\ldots H_{s_H}}_{1 \leqslant s_H \leqslant s_4} \\
+ \begin{matrix}\bar{x}_1\\x_2\end{matrix} B\underbrace{E_1\ldots E_{s_E}}_{1 \leqslant s_E \leqslant s_1}\underbrace{H_1\ldots H_{s_H}}_{1 \leqslant s_H \leqslant s_4} \quad
+\begin{matrix}\bar{x}_1\\\bar{x}_2\end{matrix} B\underbrace{F_1\ldots F_{s_F}}_{1 \leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1 \leqslant s_G \leqslant s_3}
+			\end{cases}
+			$$
+			$$
+			C\begin{cases}
+\begin{matrix}x_1\\x_2\end{matrix} C\underbrace{F_1\ldots F_{s_F}}_{1 \leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1 \leqslant s_G \leqslant s_3} \quad
+ \begin{matrix}x_1\\\bar{x}_2\end{matrix} C\underbrace{E_1\ldots E_{s_E}}_{1 \leqslant s_E \leqslant s_1}F\underbrace{H_1\ldots H_{s_H}}_{1 \leqslant s_H \leqslant s_4} \\
+ \begin{matrix}\bar{x}_1\\x_2\end{matrix} C\underbrace{E_1\ldots E_{s_E}}_{1 \leqslant s_E \leqslant s_1}\underbrace{H_1\ldots H_{s_H}}_{1 \leqslant s_H \leqslant s_4} \quad
+\begin{matrix}\bar{x}_1\\\bar{x}_2\end{matrix} C\underbrace{F_1\ldots F_{s_F}}_{1 \leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1 \leqslant s_G \leqslant s_3}H
+			\end{cases}
+			$$
+			$$
+			D\begin{cases}
+\begin{matrix}x_1\\x_2\end{matrix} DE\underbrace{F_1\ldots F_{s_F}}_{1 \leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1 \leqslant s_G \leqslant s_3} \quad
+ \begin{matrix}x_1\\\bar{x}_2\end{matrix} D\underbrace{E_1\ldots E_{s_E}}_{1 \leqslant s_E \leqslant s_1}\underbrace{H_1\ldots H_{s_H}}_{1 \leqslant s_H \leqslant s_4} \\
+ \begin{matrix}\bar{x}_1\\x_2\end{matrix} D\underbrace{E_1\ldots E_{s_E}}_{1 \leqslant s_E \leqslant s_1}G\underbrace{H_1\ldots H_{s_H}}_{1 \leqslant s_H \leqslant s_4} \quad
+\begin{matrix}\bar{x}_1\\\bar{x}_2\end{matrix} D\underbrace{F_1\ldots F_{s_F}}_{1 \leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1 \leqslant s_G \leqslant s_3}
+			\end{cases}
+			$$\par
+			Подсчитаем число новых конъюнкций, в которых участвуют переменные $x_1, x_2:$
+			$$
+				f(\overline{t}, \overline{s}) = t_1\big(2((2^{s_2} - 1)(2^{s_3} - 1) + (2^{s_1} - 1)(2^{s_4} - 1) + (2^{s_1} - 1)s_3(2^{s_4} - 1) + (2^{s_2} - 1)(2^{s_3} - 1)s_4) + $$ $$ + (2^{s_1} - 1)(2^{s_2} - 1)(2^{s_3} - 1)(2^{s_4} - 1)\big) +
+			$$
+			$$
+				+ t_2\big(2(s_1(2^{s_2} - 1)(2^{s_3} - 1) + (2^{s_1} - 1)s_2(2^{s_4} - 1) + (2^{s_1} - 1)(2^{s_4} - 1) + (2^{s_2} - 1)(2^{s_3} - 1)) + $$ $$ + (2^{s_1} - 1)(2^{s_2} - 1)(2^{s_3} - 1)(2^{s_4} - 1)\big) +
+			$$
+			$$
+				+ t_3\big(2((2^{s_2} - 1)(2^{s_3} - 1) + (2^{s_1} - 1)s_2(2^{s_4} - 1) + (2^{s_1} - 1)(2^{s_4} - 1) + (2^{s_2} - 1)(2^{s_3} - 1)s_4) + $$ $$ + (2^{s_1} - 1)(2^{s_2} - 1)(2^{s_3} - 1)(2^{s_4} - 1)\big) +
+			$$
+			$$
+				+ t_4\big(2(s_1(2^{s_2} - 1)(2^{s_3} - 1) + (2^{s_1} - 1)(2^{s_4} - 1) + (2^{s_1} - 1)s_3(2^{s_4} - 1) + (2^{s_2} - 1)(2^{s_3} - 1)) + $$ $$ + (2^{s_1} - 1)(2^{s_2} - 1)(2^{s_3} - 1)(2^{s_4} - 1)\big) +
+			$$
+			$$
+			+ \big(s_1s_2 + s_1(2^{s_2} - 1)(2^{s_3} - 1) + (2^{s_1} - 1)s_2(2^{s_4} - 1) + s_3s_4 + (2^{s_1} - 1)s_3(2^{s_4} - 1) + (2^{s_2} - 1)(2^{s_3} - 1)s_4 + $$ $$ +s_1s_3 + s_1(2^{s_2} - 1)(2^{s_3} - 1) + (2^{s_1} - 1)s_3(2^{s_4} - 1) + s_2s_4 + (2^{s_1} - 1)s_2(2^{s_4} - 1) + (2^{s_2} - 1)(2^{s_3} - 1)s_4 +$$ $$ +4(2^{s_1} - 1)  (2^{s_2} - 1) (2^{s_3} - 1)  (2^{s_4} - 1)\big)
+$$
+		\subsection{Случай трёх переменных}
+		ДНФ $D$ состоит из конъюнкций вида
+		$$\text{I}
+		\begin{cases}
+		\begin{array}{ccc}
+		x_1&x_2&x_3\\
+		\bar{x}_1&\bar{x}_2&\bar{x}_3
+		\end{array}
+		\end{cases}
+		$$
+		$$\text{II}
+		\begin{cases}
+		\begin{array}{ccc}
+		x_1x_2&x_1x_3&x_2x_3\\
+		x_1\bar{x}_2&x_1\bar{x}_3&x_2\bar{x}_3\\
+		\bar{x}_1x_2&\bar{x}_1x_3&\bar{x}_2x_3\\
+		\bar{x}_1\bar{x}_2&\bar{x}_1\bar{x}_3&\bar{x}_2\bar{x}_3\\
+		\end{array}
+		\end{cases}
+		$$
+		$$\text{III}
+		\begin{cases}
+		\begin{array}{cc}
+		x_1x_2x_3&\bar{x}_1x_2x_3\\
+		x_1x_2\bar{x}_3&\bar{x}_1x_2\bar{x}_3\\
+		x_1\bar{x}_2x_3&\bar{x}_1\bar{x}_2x_3\\
+		x_1\bar{x}_2\bar{x}_3&\bar{x}_1\bar{x}_2\bar{x}_3\\
+		\end{array}
+		\end{cases}
+		$$\par
+		%Конъюнкций каждого из видов I, II и III по $m, k$ и $s$ соответственно.\par
+		Конъюнкции вида $x_i^{\sigma_i}x_j^{\sigma_j},\,\,i,j\in\{1,2,3\}, i\neq j,$ могут быть образованы применением правила Блейка к паре конъюнкций из I и III, II и III или III и III.\par
+		\textbf{III и III.} Фиксируем по очереди каждую переменную $x_i^{\sigma}, i\in\{1,2,3\}, \sigma \in \{0, 1\},$ и получаем случай 2-х переменных, для которого известна верхняя оценка на число образованных конънюкций: $O(2^{4s}).$\par
+		\textbf{I и III, II и III.} В любой цепочке применения правила Блейка с образованием конъюнкции вида $x_i^{\sigma_i}x_j^{\sigma_j}$ может участвовать не более одной конъюнкции из I или II, значит, в оценку добавляется только множитель: $O((m+k)2^{4s}).$\par
+		После того, как образованы все конъюнкции вида $x_i^{\sigma_i}x_j^{\sigma_j}$, задача разбивается на три подзадачи для случаев каждой пары переменных: $x_1$ и $x_2$, $x_1$ и $x_3$, $x_2$ и $x_3$. Для них известна верхняя оценка на число образованных конъюнкций.
+	\section{Сравнение методов поточечного покрытия и критерия поглощения}
+		Пусть необходимо проверить, поглощается ли конъюнкция $K$ ДНФ $D = \bigvee\limits_{i = 1}^r K_i.$\par
+		Пусть $n$ --- число переменных, $q$ --- ранг конъюнкции $K.$\\
+		\textbf{Шаг 1.} Определим окрестность 1-го порядка конъюнкции $K$: $S_1(K, D) = \{K_i\}.$\par
+		Сложность этой проверки $O(rn).$\par
+		Пусть $|S_1(K, D)| = m$.\\
+		\textbf{Шаг 2.} Определим, образуют ли полученные $K_i$ покрытие $K.$ Возможны 2 способа:\par
+		\begin{enumerate}
+			\item
+			Для каждой конъюнкции $K_i$ отмечаем покрываемые ею точки интервала, соответствующего $K.$ Если все точки этого интервала оказались покрыты, то конъюнкция $K$ поглощается, иначе удалить её нельзя.\par
+			Сложность этой операции $O(rn2^{n-q})$.
+			\item
+			Применяем критерий поглощения и с помощью метода Блейка проверяем, верно ли, что $\bigvee\limits_{i = 1}^m K'_i \equiv 1.$ Если да, то согласно критерию поглощения конъюнкция $K$ покрывается $D,$ иначе нет.\par
+			%Метод Блейка имеет экспоненциальную сложность по $n.$
+		\end{enumerate}\par
+		Необходимо принять решение о том, как проверять факт поглощения: прямым поточечным покрытием или с помощью критерия поглощения.
+		\begin{enumerate}
+			\item
+			Оцениваем число операций, необходимых для проверки прямым покрытием:
+			$$
+				\sum_{i = 1}^r 2^{n-\text{rg}(K \& K_i)} = O\left(r 2^{n - \min\limits_{i = \overline{1,\,r}}rg(K \& K_i)}\right).
+			$$
+			\item
+			Оцениваем число конъюнкций, образуемых в ходе метода Блейка для $\bigvee\limits_{i = 1}^m K'_i$.
+			\item
+			По числу конъюнкций оцениваем число операций в методе Блейка.
+			\item
+			Сравниваем оценки, полученные в пунктах 1 и 3, и если порядки оценок существенно различны, то можно сделать выбор в пользу того или иного метода.
+		\end{enumerate}
+		\begin{example}[Метод Блейка оптимален]
+			\hspace{5pt}\parПусть заданы $n = 15$, $K = x_3\bar{x}_4$ и 
+			$$D = x_1x_3 \vee x_2x_3 \vee \bigvee\limits_{i = 5}^{10}\bar{x}_1x_i \vee \bigvee\limits_{i = 11}^{15}\bar{x}_2x_i.$$\par
+			В ходе критерия поглощения получаем ДНФ
+			$$D' = x_1 \vee x_2 \vee \bigvee\limits_{i = 5}^{10}\bar{x}_1x_i \vee \bigvee\limits_{i = 11}^{15}\bar{x}_2x_i.$$\\
+			В ней в обеих степенях встречаются только переменные $x_1$ и $x_2,$ а в ходе применения правила Блейка образуется 11 новых конъюнкций:
+			$$
+				D'' = x_1 \vee x_2 \vee \bigvee\limits_{i = 5}^{10}\bar{x}_1x_i \vee \bigvee\limits_{i = 11}^{15}\bar{x}_2x_i \vee \bigvee\limits_{i = 5}^{15}x_i.
+			$$\par
+			При поточечном покрытии было бы необходимо перебрать $2\times 2^{13} + {11}\times 2^{12}$ точек, что на порядок превосходит число операций предыдущего метода.
+		\end{example}
+		\begin{example}[Прямое покрытие оптимально]
+			\hspace{5pt}\par Пусть $n = 6$, $K = x_3\bar{x}_4$ и 
+			$$
+				D = \bigvee\limits_{i = 3}^6x_1x_2x_i \vee \bigvee\limits_{i = 3}^6x_1\bar{x}_2x_i \vee \bigvee\limits_{i = 3}^6\bar{x}_1x_2x_i \vee \bigvee\limits_{i = 4}^6\bar{x}_1\bar{x}_2x_i.
+			$$\par
+			В ходе критерия поглощения получаем ДНФ
+			$$
+				D' = x_1x_2x \vee x_1\bar{x}_2 \vee \bar{x}_1x_2 \vee \bigvee\limits_{i = 4}^6(x_1x_2x_i \vee x_1\bar{x}_2x_i \vee \bar{x}_1x_2x_i \vee \bar{x}_1\bar{x}_2x_i).
+			$$\par
+			В ходе применения метода Блейка к $D'$ образуется не менее $(2^3-1)^4$ новых конъюнкций.\par
+			При поточечном покрытии было бы необходимо перебрать $12 \times 2 + 3 \times 2^2$ точек, что значительно меньше.
+		\end{example}
 \newpage
 
 			%\section{Новые подходы и~результаты}
@@ -611,18 +998,20 @@
 \def\BibUrl#1.{}\def\BibAnnote#1.{}
 %\def\BibUrl#1{\\{\footnotesize\tt\def~{\char126} http://#1}}
 \bibliographystyle{gost71s}
-\bibliography{MachLearn}
+%\bibliography{MachLearn}
 
 \begin{thebibliography}{99}
 
+\bibitem{1}
+{\it Журавлев Ю.\,И., Коган А.\,Ю.} Реализация булевых функций с малым числом нулей дизъюнктивными нормальными формами и смежные задачи // Докл. АН СССР. 1985. Т. 285. No 4. С. 795-799.
+
+\bibitem{2}
+{\it Журавлев Ю.\,И., Коган А.\,Ю.} Алгоритм построения дизъюнктивной нормальной формы, эквивалент­ ной произведению левых частей булевых уравнений нельсоновского типа // Ж. вычисл. матем. и матем. физ. 1986. Т. 26. No 8. С. 1243-1249.
+
+\bibitem{3}{\it Соколов П.\,Л.} Об оптимальной расшифровке монотонных функций алгебры логики // Ж. вычисл. ма­тем. и матем. физ. 1982. Т. 22. No 2. С. 449-461.
+
 \bibitem{Marsaglia03}
-  George Marsaglia. 2003. Xorshift RNGs. Journal of Statistical Software 8, 14 (2003), 1--6.
-
-\bibitem{Vigna14}
-  Sebastiano Vigna. 2014. Further scramblings of Marsaglia's xorshift generators. CoRR, abs/1404.0390.
-
-\bibitem{TestU01}
-  P. L'Ecuyer and R. Simard. 2007. TestU01: A C Library for Empirical Testing of Random Number Generators ACM Transactions on Mathematical Software, Vol. 33, article 22.
+{\it Дьяконов А.\,Г.} Реализация одного класса булевых функций с малым числом нулей тупиковыми дизъюнктивными нормальными формами, Ж. вычисл. матем. и матем. физ., 2001, том 41, номер 5, 821–828
 
 \end{thebibliography}
 
