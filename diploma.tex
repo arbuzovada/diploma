@@ -791,9 +791,9 @@
 			$$\par
 			Будем исследовать число новых конъюнкций, которые не исследованы в предыдущем случае, т.е. таких, в которые входят переменные из первых четырёх групп.\par
 			Поскольку ранее было доказано, что образуются все конъюнкции вида
-			\begin{equation}
+			$$%\begin{equation}
 				x_i^{\sigma} P \underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}, i\in\{1,2\},\sigma\in\{0,1\}, P \in \{A, B, C, D\},
-			\end{equation}\\
+			$$\\%\end{equation}\\
 			исследуем те, в которые не входят все 4 буквы $E, F, G, H.$\par
 			Можно выписать вид таких конъюнкций:
 			$$
@@ -843,7 +843,50 @@
 			$$
 			$$
 			+ \big(s_1s_2 + s_1(2^{s_2} - 1)(2^{s_3} - 1) + (2^{s_1} - 1)s_2(2^{s_4} - 1) + s_3s_4 + (2^{s_1} - 1)s_3(2^{s_4} - 1) + (2^{s_2} - 1)(2^{s_3} - 1)s_4 + $$ $$ +s_1s_3 + s_1(2^{s_2} - 1)(2^{s_3} - 1) + (2^{s_1} - 1)s_3(2^{s_4} - 1) + s_2s_4 + (2^{s_1} - 1)s_2(2^{s_4} - 1) + (2^{s_2} - 1)(2^{s_3} - 1)s_4 +$$ $$ +4(2^{s_1} - 1)  (2^{s_2} - 1) (2^{s_3} - 1)  (2^{s_4} - 1)\big)
-$$
+$$\par
+		Выпишем вид новых образованных конъюнкций, в которые не входят переменные $x_1, x_2:$
+		$$
+			\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}
+		$$
+		$$
+			PQ\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4},\,\,P,Q\in\{A, B, C, D \}
+		$$
+		\vspace{10pt}
+		$$
+			A\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}H, BE\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}, C\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}H, DE\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}
+		$$
+		$$
+			A\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}G\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}, B\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}F\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}, C\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}F\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}, D\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}G\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}
+		$$
+		\vspace{10pt}
+		$$
+			AA\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}H, AB\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}, AC\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}H, AD\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}
+		$$
+		$$
+			AA\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}G\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}, AB\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}, AC\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}, AD\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}G\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}
+		$$
+		$$
+			ABE\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}H, BBE\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}, BCE\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}H, BDE\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}
+		$$
+		$$
+			AB\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}FG\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}, BB\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}F\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}, BC\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}F\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}, BD\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}FG\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}
+		$$
+		$$
+			AC\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}H, BC\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}, CC\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}H, CD\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}
+		$$
+		$$
+			AC\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}FG\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}, BC\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}F\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}, CC\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}F\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}, CD\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}FG\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}
+		$$
+		$$
+			ADE\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}H, BDE\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}, CDE\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}H, DDE\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}
+		$$
+		$$
+			AD\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}G\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}, BD\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}, CD\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}, DD\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}G\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}
+		$$\par
+		Подсчитаем их число:
+		$$
+			((t_1 + t_2 + t_3 + t_4)^2 + 1)(2^{s_1} - 1)(2^{s_2} - 1)(2^{s_3} - 1)(2^{s_4} - 1)
+		$$
 		\subsection{Случай трёх переменных}
 		ДНФ $D$ состоит из конъюнкций вида
 		$$\text{I}
@@ -992,6 +1035,8 @@ $$
 
 \renewcommand{\bibname}{Список литературы}
 \addcontentsline{toc}{section}{\bibname}
+
+\end{document}
 
 \nocite{hastie09elements,bishop06pattern,zhuravlev06recognition,zhuravlev78prob33,shlezinger04ten,boucheron05theory}
 
