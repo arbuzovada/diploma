@@ -224,7 +224,7 @@
 	$$
 		f(\tilde x^n) = \bigwedge_{i = 1}^k (x_1^{\alpha_{i1}} \vee \ldots \vee x_n^{\alpha_{in}}).
 	$$\par
-	Для того, чтобы преобразовать это выражение в дизъюнктивную нормальную форму, необходимо раскрыть скобки, используя закон дистрибутивности, и применить правила идемпотентности ($x\wedge x = x$) и поглощения ($K_1 \vee K_1\wedge K_2 = K_1$). %(алгоритм Нельсона?).
+	Для того, чтобы преобразовать это выражение в дизъюнктивную нормальную форму, необходимо раскрыть скобки, используя закон дистрибутивности, и применить правила идемпотентности ($x\wedge x = x$) и поглощения ($K_1 \vee K_1K_2 = K_1$). %(алгоритм Нельсона?).
 Нетрудно видеть, что число образованных слагаемых до поглощений составляет $n^k.$ Оно быстро растёт с увеличением числа переменных, и даже при относительно малом числе нулей большое $n$ может создать вычислительно неподъёмную задачу.\par
 	Возникает вопрос о нахождении <<непрямых>> методов получения ДНФ функции, заданной набором своих нулей.
 	\section{Обзор существующих подходов}
@@ -236,7 +236,7 @@
 			$$
 				f(\tilde x^n) = (x_1 \vee x_2 \vee \ldots \vee x_n)\wedge(\bar{x}_1 \vee \bar{x}_2 \vee \ldots \vee \bar{x}_n).
 			$$\par
-			После прямого раскрытия скобок образуется $n^2 - n$ конъюнкций (за исключением противоречивых конъюнкций вида $x_i\wedge\bar{x}_i, i = \overline{1,\,n}$), однако С.\,В. Яблонский заметил, что существует короткая форма:
+			После прямого раскрытия скобок образуется $n^2 - n$ конъюнкций (за исключением противоречивых конъюнкций вида $x_i\wedge\bar{x}_i,\,\,i = \overline{1,\,n}$), однако С.\,В. Яблонский заметил, что существует короткая форма:
 			$$
 				f(\tilde x^n) = x_1\bar{x}_2 \vee x_2\bar{x}_3 \vee \ldots \vee x_n \bar{x}_1.
 			$$\par
@@ -263,9 +263,9 @@
 					x_i \rightarrow x_{\pi(i)},\,\,i = \overline{1,\,n},
 				$$
 				где $\pi$ --- перестановка на множестве из $n$ элементов.\\
-				Пусть было образовано $m$ групп, в каждой по $n_i, i = \overline{1,\,m},$ столбцов.
+				Пусть было образовано $m$ групп, в каждой по $n_i,\,\,i = \overline{1,\,m},$ столбцов.
 			\end{enumerate}\par
-			Составим новую матрицу $M'_{k \times m},$ в которую столбцы из каждой группы входят ровно 1 раз, и пусть она является матрицей нулей некоторой функции $\varphi(\tilde z^m).$ Пусть $\mathcal{D}_{\varphi}$ --- ДНФ функции $\varphi$ в исходных переменных, что можно образовать c помощью замены
+			Составим новую матрицу $M'_{k \times m},$ в которую столбцы из каждой группы входят ровно один раз, и пусть она является матрицей нулей некоторой функции $\varphi(\tilde z^m).$ Пусть $\mathcal{D}_{\varphi}$ --- ДНФ функции $\varphi$ в исходных переменных, что можно образовать c помощью замены
 			$$
 				z_i \rightarrow x_{n_1 + \ldots + n_{i - 1} + 1},\,\,i = \overline{1,\,m}.
 			$$\par
@@ -276,7 +276,7 @@
 			$$
 				\ldots \vee x_{n_{m - 1} + 1}\bar{x}_{n_{m - 1} + 2} \vee x_{n_{m - 1} + 2}\bar{x}_{n_{m - 1} + 3} \vee \ldots \vee x_{n}\bar{x}_{n_{m - 1} + 1} \vee \mathcal{D}_{\varphi}.
 			$$\par
-			Её длина $L(\mathcal{D}_f) = L(\mathcal{D}_{\varphi}) + n.$\par
+			Её длина $L(\mathcal{D}_f) = L(\mathcal{D}_{\varphi}) + \sum\limits_{i = 1}^m n_i[n_i > 1].$\par
 			\underline{Определение}. Булева функция $g$ называется {\it приведённой}, если матрица $M_g$ её нулевых точек состоит из различных столбцов, исключая нулевой и единичный, причём из каждых двух двойственных столбцов в $M_g$ содержится ровно один.\par
 			Таким образом выше описано построение приведённой функции $\varphi,$ соответствующей исходной функции $f.$
 		\subsection{Метод построения ДНФ, предложенный А.\,Г. Дьяконовым} \label{dj}
@@ -284,16 +284,20 @@
 			Опишем полученные А.\,Г. Дьяконовым результаты построения ДНФ приведённой функции. Связь ДНФ исходной функции с ДНФ соответствующей ей приведённой подробно описана в \ref{zhuravlev_kogan}.\par
 			Напомним используемые в статье обозначения.\par
 			Задана приведённая функция $\varphi(\tilde x^n)$ и её матрица нулей $||\alpha_{ij}||_{k \times n}.$\par
-			Столбцу $(\alpha_{1j}, \ldots, \alpha_{kj})^{\text{T}}$ соответствует переменная $x_{z(j)}, z(j) = \sum\limits_{i = 1}^k 2^{i - 1}\alpha_{ij},$ переменной $x_t, t\in \{z(1),\ldots,z(n)\}$ --- столбец $(\alpha_{1y(t)}, \ldots, \alpha_{ky(t)})^{\text{T}}.$\par
+			Столбцу $(\alpha_{1j}, \ldots, \alpha_{kj})^{\text{T}}$ соответствует переменная $x_{z(j)}, z(j) = \sum\limits_{i = 1}^k 2^{i - 1}\alpha_{ij},$ переменной $x_t, t\in \{z(1),\ldots,z(n)\}$, --- столбец $(\alpha_{1y(t)}, \ldots, \alpha_{ky(t)})^{\text{T}}.$\par
 			Множества индексов нулевых/ненулевых элементов столбцов:
 			$$
-				Z(t) = \{j | \alpha_{jy(t)} = 0\},\quad E(t) = \{j | \alpha_{jy(t)} = 1\}
+				Z(t) = \{j | \alpha_{jy(t)} = 0\},\quad E(t) = \{j | \alpha_{jy(t)} = 1\}.
 			$$\par
 			Множество индексов переменных, соответствующие столбцы которых не входят в единичную подматрицу:
 			$$
-				V = \{z(1), \ldots, z(n)\} \backslash \left\{2^i | i = \overline{0,\,k - 1}\right\}
+				V = \{z(1), \ldots, z(n)\} \backslash \left\{2^i | i = \overline{0,\,k - 1}\right\}.
 			$$\par
-			Разбиение множества столбцов длины $(k - 1)$: $\Psi = \{\psi(t) = (\alpha_{1t}, \ldots, \alpha_{(k - 1) t})^{\text{T}} | t \in V\} \subset E^{k - 1}\backslash E^{k - 1}_0\backslash E^{k - 1}_1 \backslash E^{k - 1}_{k - 1}$ на непересекающиеся цепи:
+			Разбиение множества столбцов длины $(k - 1)$
+			$$
+				\Psi = \{\psi(t) = (\alpha_{1t}, \ldots, \alpha_{(k - 1) t})^{\text{T}} | t \in V\} \subset E^{k - 1}\backslash E^{k - 1}_0\backslash E^{k - 1}_1 \backslash E^{k - 1}_{k - 1}
+			$$
+			 на непересекающиеся цепи:
 			$$
 				V = \bigcup_{i = 1}^qB^i,\quad B^i\cap B^j = \varnothing,\,\,i \neq j,\,\,i,j \in \{1,\ldots,q\},\quad B^i = \{b^i_1,\ldots, b^i_{\beta(i)} \},
 			$$
@@ -320,9 +324,9 @@
 			f(\tilde x^n) = \bigwedge_{i = 1}^r \mathcal{D}_i,
 		$$
 		и её ДНФ $\mathcal{D}_f$ может быть получена раскрытием скобок в данном выражении и применением правила поглощения.\par
-		Видно, что чем меньше длина каждой ДНФ $\mathcal{D}_i,$ тем меньше длина и искомой результирующей ДНФ $\mathcal{D}.$\par
-		Для определения $\mathcal{D}_i$ воспользуемся результатами А.\,Г. Дьяконова, описанными в \ref{dj}, построения ДНФ булевых функций, матрица нулей которых содержит единичную подматрицу. По заданной матрице нулей $M_i$ ДНФ $\mathcal{D}_i$ можно строить любым из описанных двух способов. 
-		\subsection{Cпособы разбиения строк матрицы $M$}
+		Видно, что чем меньше длина каждой ДНФ $\mathcal{D}_i,$ тем меньше длина и искомой результирующей ДНФ $\mathcal{D}_f.$\par
+		Для определения $\mathcal{D}_i$ воспользуемся результатами А.\,Г. Дьяконова (см. \ref{dj}) построения ДНФ булевых функций, матрица нулей которых содержит единичную подматрицу. По заданной матрице нулей $M_i$ ДНФ $\mathcal{D}_i$ можно строить любым из описанных в \ref{dj} двух способов. 
+		\subsection{Cпособы разбиения строк матрицы нулей}
 			Возможны различные подходы к выбору ширины полос, на которые разбивается матрица нулей $M.$\par
 			$1^{\circ}.$ Пусть фиксируется параметр $p$ и исходная матрица нулей $M$ делится на $r = \left[\frac{k}{p}\right]$ полос одинаковой ширины.\par
 			При $p = 1$ описанный выше алгоритм сведётся к построению ДНФ по каждому отдельному нулю функции $f$ и записи совершенной конъюнктивной нормальной формы. При $p = k$ мы ничем не упростили задачу построения ДНФ функции с $k$ нулями. Покажем, что выбором $1 \leqslant p \leqslant k$ можно добиться улучшения результата.\par
@@ -336,12 +340,12 @@
 			предложим следующий жадный алгоритм.\par
 			Предполагая, что выбранный параметр $p$ достаточно мал, мы можем позволить себе вычислительный объём полного перебора подножеств строк (например, при $p = 5$ и $k = 25$ необходимо рассмотреть $C_{25}^5 = 53130$ вариантов).\par
 			Для первой группы строк перебираются все подмножества по $p$ из $k$ строк исходной матрицы $M$ и выбирается такое, в котором присутствует единичная подматрица и содержится как можно больше одинаковых столбцов. Для второй группы процедура повторяется выбором подножества по $p$ из оставшихся $k - p$ строк и так далее.\par
-			Если в какой-то момент оказалось, что ни одно подмножество строк не образует единичную подматрицу, то параметр $p$ уменьшается, т.е. последующие полосы будут иметь меньшую <<ширину>>, и процесс для них повторяется. Заметим, что уменьшением $p$ всегда можно добиться получения единичной матрицы в выбранной подматрице: для $p = 1$ это выполнено всегда. В случае приведённой функции это верно и для $p = 2,$ поскольку отсутствуют константные и одинаковые столбцы. (нужно получше доказать)\par
+			Если в какой-то момент оказалось, что ни одно подмножество строк не образует единичную подматрицу, то параметр $p$ уменьшается, т.е. последующие полосы будут иметь меньшую <<ширину>>, и процесс для них повторяется. Заметим, что уменьшением $p$ всегда можно добиться получения единичной матрицы в выбранной подматрице: для $p = 1$ это выполнено всегда.\par %В случае приведённой функции это верно и для $p = 2,$ поскольку отсутствуют константные и одинаковые столбцы. (нужно получше доказать)\par А ЧТО В СЛУЧАЕ НУЛЕВОЙ СТРОКИ???
 		\begin{algorithm}[H]
 			\SetAlgoLined
 			\KwData{$M \in \{0,\,1\}^{k \times n}$ --- бинарная матрица}
 			\Parameter{$p$ --- число строк в образованных подматрицах}
-		 	\KwResult{$\{M_i\}_{i = 1}^{r}$ --- разбиение матрицы $M$ по строкам, где $r = \left [ \frac{k}{p}\right ]$}
+		 	\KwResult{$\mathcal{M} = \{M_i\}_{i = 1}^{r}$ --- разбиение матрицы $M$ по строкам, где $r = \left [ \frac{k}{p}\right ]$}
 			$Inds \mathbin{:=} \{1,\ldots,k\}$ --- множество ещё не использованных индексов строк матрицы $M$\;
 			\For{$i = \overline{1,\,r}$}{
 				\For{\textnormal{каждого подмножества $subset$ по $p$ индексов из $Inds$}}{
@@ -362,7 +366,7 @@
 			\begin{algorithm}[H]
 			\SetAlgoLined
 			\KwData{$M \in \{0,\,1\}^{k \times n}$ --- бинарная матрица}
-		 	\KwResult{$\{M_i\}_{i = 1}^{r}$ --- разбиение матрицы $M$ по строкам}
+		 	\KwResult{$\mathcal{M} = \{M_i\}_{i = 1}^{r}$ --- разбиение матрицы $M$ по строкам}
 			$Inds \mathbin{:=} \{1,\ldots,k\}$ --- множество ещё не использованных индексов строк матрицы $M$\;
 			\For{$p = k,\ldots, 1$}{
 				\While{\textnormal{в $M$ существует единичная подматрица размера $p \times p,$}}{
@@ -371,7 +375,7 @@
 							$subset_i \mathbin{:=} subset$
 						}
 					}
-					$M_i \mathbin{:=} M(subset_i)$\;
+					$\mathcal{M} \mathbin{:=} \mathcal{M} \cup M(subset_i)$\;
 					$Inds \mathbin{:=} Inds \backslash subset_i$\;
 				}
 			}
@@ -381,13 +385,13 @@
 		\subsection{Оценка длины ДНФ}
 			Оценим число конъюнкций в результирующей ДНФ $\mathcal{D}_f.$\par
 			Напомним, что в случае фиксированного параметра $p$ ДНФ $\mathcal{D}_f$ получается перемножением $r = \left [ \frac{k}{p}\right ]$ скобок, каждая из которых представляет собой ДНФ $\mathcal{D}_i$, полученную по способу, описанному в \ref{dj}. 
-			$$L(\mathcal{D}_i) = 2m + \frac{1}{2}(p^2 - 5p) + L(\mathcal{D}_i'),$$
-			где $\mathcal{D}'$ соответствует переводу ДНФ приведённой функции к исходной, $L(\mathcal{D}_i') \leqslant n$.\par
+			$$L(\mathcal{D}_i) = 2m_i + \frac{1}{2}(p^2 - 5p) + L(\mathcal{D}_i'),$$
+			где $\mathcal{D}_i'$ соответствует переводу ДНФ приведённой функции к исходной, $L(\mathcal{D}_i') \leqslant n$.\par
 			Тогда длина ДНФ $\mathcal{D}_f$ до применения поглощений после раскрытия скобок оценивается как
 			$$
-				L(\mathcal{D}_f) = \prod_{i = 1}^{r} \left(2m + \frac{1}{2}(p^2 - 5p) + L(D_i') \right).
+				L(\mathcal{D}_f) = \prod_{i = 1}^{r} \left(2m_i + \frac{1}{2}(p^2 - 5p) + L(D_i') \right).
 			$$\par
-			Как функция от параметра $p$ она выпукла:
+			Как функция от параметра $p,\,\,1 \leqslant p \leqslant k,$ она выпукла:
 			$$
 				L(p; n, k) = \left( \underline{O}(n) + \frac{1}{2}(p^2 - 5p)\right)^{\frac{k}{p}}.
 			$$
@@ -396,13 +400,13 @@
 			%Рассмотрим один из подходов \emph{приближённого} решения описанной задачи.
 		Пусть дана сокращённая ДНФ $\mathcal{D}_{f}$ функции $f$:
 		$$
-			\mathcal{D}_{f} = \bigvee_{i = 1}^{n} K_{i}
+			\mathcal{D}_{f} = \bigvee_{i = 1}^{n} K_{i}.
 		$$ \par
 		Определение минимальной ДНФ этой функции --- задача, по-видимому, $NP$-полная, поэтому предложим вариант построения некоторой тупиковой ДНФ $f$, которая во многих случаях, вероятно, достаточно близка по сложности к минимальной.
 		\subsection{Проверка поглощения конъюнкции}
 			Пусть для конъюнкции $K$ требуется проверить, поглощается ли она остальными конъюнкциями ДНФ $\mathcal{D}.$ Рассмотрим прямой алгоритм поточечной проверки интервала, соответствующего конъюнкции $K.$\par
 			Определим окрестность 1-го порядка $S_1(K)$ конъюнкции $K.$ Будем по очереди перебирать конъюнкции $K' \in S_1(K)$ и пересекать соответствующий им интервал $N_{K'}$ c интервалом $N_K.$ Если в результате все точки интервала $N_K$ оказались покрытыми, то $K$ поглощается конъюнкциями из своей окрестности 1-го порядка.\par
-			Пусть $K = x_{i_1}^{\sigma_{i_1}} \ldots x_{i_k}^{\sigma_{i_k}}, \text{rg}K = k,$ и $K' = x_{j_1}^{\sigma_{j_1}} \ldots x_{j_m}^{\sigma_{j_m}}, \text{rg}K' = m.$ Определим конъюнкцию, соответствующую пересечению интервалов $N_K$ и $N_{K'}.$ Она будет иметь вид $K'' = x_{i_1}^{\sigma_{i_1}} \ldots x_{i_k}^{\sigma_{i_k}} x_{j_1}^{\sigma_{j_1}} \ldots x_{j_m}^{\sigma_{j_m}},$ при этом некоторые буквы, входящие в запись $K$ и $K'$ могут совпадать, т.е. $\max\{k, m\} \leqslant \text{rg}K'' \leqslant k + m.$ Тогда сложность построения интервала пересечения составляет $\underline{O}(k + m) = \underline{O}(n),$ где $n$ --- число переменных.\par
+			Пусть $K = x_{i_1}^{\sigma_{i_1}} \ldots x_{i_k}^{\sigma_{i_k}},\,\, \text{rg}K = k,$ и $K' = x_{j_1}^{\sigma_{j_1}} \ldots x_{j_m}^{\sigma_{j_m}},\,\, \text{rg}K' = m.$ Определим конъюнкцию, соответствующую пересечению интервалов $N_K$ и $N_{K'}.$ Она будет иметь вид $K'' = x_{i_1}^{\sigma_{i_1}} \ldots x_{i_k}^{\sigma_{i_k}} x_{j_1}^{\sigma_{j_1}} \ldots x_{j_m}^{\sigma_{j_m}},$ при этом некоторые буквы, входящие в запись $K$ и $K'$ могут совпадать, т.е. $\max\{k, m\} \leqslant \text{rg}K'' \leqslant k + m.$ Тогда сложность построения интервала пересечения составляет $\underline{O}(k + m) = \underline{O}(n),$ где $n$ --- число переменных.\par
 			Пусть $|S_1(K)| = t,$ тогда построение всех пересечений займёт $\underline{O}(tn)$ операций.\par
 			Упорядочим полученные конъюнкции-пересечения по убыванию их размерности, таким образом, при проверке покрытия точек конъюнкции $K$ мы начнём с тех, которые накроют максимальное число точек. Поскольку ранги конъюнкций --- целые числа, непревосходящие $n,$ то для их упорядочения можно применить алгоритм сортировки подсчётом, временная сложность которого линейна $\underline{O}(t + n).$ При этом можно удалить повторы, которые в отсортированном списке конъюнкций будут идти подряд.\par
 			Для каждой из $t$ конъюнкций $K''$ необходимо отметить покрываемые ею точки, число которых $2^{n - \text{rg}K''}.$\par
@@ -461,14 +465,14 @@
 		Для выполнения этой проверки воспользуемся методом Блейка построения сокращённой ДНФ булевой функции, задаваемой $\mathcal{D}.$\par
 		Правило Блейка:
 		$$
-			Ax \vee B\bar{x} = Ax \vee B\bar{x} \vee AB
+			Ax \vee B\bar{x} = Ax \vee B\bar{x} \vee AB,
 		$$
 		$$
-			x \vee A\bar{x} = x \vee A
+			x \vee A\bar{x} = x \vee A.
 		$$\par
 		Если обобщить правило Блейка на случай, когда и $A$, и $B$ состоят из пустого множества букв, т.е. $A = B = 1,$ то по этому правилу можно было бы получить конъюнкцию, соответствующую 1:
 		$$
-			x \vee \bar{x} = 1\& x \vee 1\&\bar{x} = 1 \& x \vee 1\&\bar{x} \vee 1 \& 1 = x \vee \bar{x} \vee 1 = 1
+			x \vee \bar{x} = 1\& x \vee 1\&\bar{x} = 1 \& x \vee 1\&\bar{x} \vee 1 \& 1 = x \vee \bar{x} \vee 1 = 1.
 		$$\par
 		Соответствующий этой единичной конъюнкции интервал будет максимальным. Т.к. по теореме результат работы метода Блейка --- сокращённая ДНФ, то если изначальная $\mathcal{D} \equiv 1$, мы получим сокращённую ДНФ из одной конъюнкции: 1.\par
 		Однако если считать элементарную конъюнкцию из пустого множества букв недопустимой, то в результате такая конъюнкция образована не будет.
@@ -514,7 +518,7 @@
 		\end{proof}\par
 		Итак, пусть заданы $n$ --- число переменных, конъюнкция $K = x_1\ldots x_q$ ранга $q$ (с помощью замены переменных всегда можно добиться представления в таком виде) и ДНФ $\bigvee\limits_iK'_i.$\par
 		В ходе применения критерия поглощения после удаления букв, входящих в конъюнкцию $K$, образована ДНФ $\mathcal{D} = \bigvee\limits_{i = 1}^rK_i,$ в которую входят $2n - q$ различных букв: $x_{q + 1},\ldots, x_n, \bar{x}_1,\ldots,\bar{x}_n$.\par
-		В ходе метода Блейка для ДНФ $\mathcal{D}$ правило Блейка может быть применено к парам конъюнкций, содержащим только переменные $x_{q+1}$ и $\bar{x}_{q+1}$, $\ldots$, $x_{n}$ и $\bar{x}_{n},$ остальные же могут встречаться в $\mathcal{D}$ только в одной степени. Т.е. не более $n - q$ переменных встречаются в $\mathcal{D}$ в обоих степенях.\par
+		В ходе метода Блейка для ДНФ $\mathcal{D}$ правило Блейка может быть применено к парам конъюнкций, содержащим только переменные $x_{q+1}$ и $\bar{x}_{q+1}$, $\ldots$, $x_{n}$ и $\bar{x}_{n},$ остальные же могут встречаться в $\mathcal{D}$ только в единственной степени. Т.е. не более $n - q$ переменных встречаются в $\mathcal{D}$ в обоих степенях.\par
 		%Пусть $q = n - 2$. В этом случае правило Блейка применимо к конъюнкциям $x_{n - 1}A \vee \bar{x}_{n - 1}B$ и $x_{n}A \vee \bar{x}_{n}B.$ Новые образованные конъюнкции содержат только отрицания переменных $x_1,\ldots,x_q,$ и тождественная единица может быть получена только в виде $x_{n - 1} \vee \bar{x}_{n - 1}$ или $x_{n} \vee \bar{x}_{n}.$\par
 		%Итак, пусть в ходе применения критерия поглощения образована ДНФ $\mathcal{D} = \bigvee\limits_iK_i.$\par
 		Будем исследовать поведение метода Блейка, применённого к полученной ДНФ, в зависимости от числа различных переменных, входящих в её запись в обеих степенях.\par
@@ -524,7 +528,7 @@
 				Пусть каждая из переменных $x_i,\,\,i = \overline{1,\,n}$, встречается в любой из конъюнкций ДНФ $\mathcal{D}$ только в степени $\sigma_i \in \{ 0, 1\}.$ Тогда $\mathcal{D} \not\equiv 1$.
 			\end{lemma}
 			\begin{proof}
-				Рассмотрим набор $(1 - \sigma_1, \ldots, 1 - \sigma_n).$ Функция, задаваемая ДНФ $\mathcal{D},$ принимает на нём значение 0, т.к. $(1 - \sigma)^{\sigma} = 0.$ Значит, существует точка, не покрываемая $\mathcal{D},$ и $\mathcal{D} \not\equiv 1$.
+				Рассмотрим набор $(\bar{\sigma}_1, \ldots, \bar{\sigma}_n).$ Функция, задаваемая ДНФ $\mathcal{D},$ принимает на нём значение 0, т.к. $\bar{\sigma}^{\sigma} = 0.$ Значит, существует точка, не покрываемая $\mathcal{D},$ и $\mathcal{D} \not\equiv 1$.
 			\end{proof}
 		\subsection{Случай одной переменной}
 			Пусть после удаления букв осталась единственная переменная $x$, которая встречается в записи $\mathcal{D}$ в обеих степенях: $x$ и $\bar{x}$.\par
@@ -552,7 +556,7 @@
 				x_iP \vee \bar{x}_iQ = x_iP \vee \bar{x}_iQ \vee PQ,\qquad(2)
 			$$
 			в результате которых образуются конъюнкции, в которые переменные $x_1$ и $x_2$ не входят.\par
-			Для начала опишем случай, когда в исходную ДНФ $\mathcal{D}$ входит одинаковое число $k$ конъюнкций вида $x_1^{\sigma_1}x_2^{\sigma_2}$ и по $m$ конъюнкций вида $x_i^{\sigma_i}$. Если их встречалось разное число, то положим $k$ или $m$ равным максимальному из них и получим оценку сверху, поскольку чем больше изначально было конъюнкций, тем большее число раз применимо правило Блейка и, следовательно, в ходе метода будет образовано не меньше конъюнкций.\par
+			Для начала опишем случай, когда в исходную ДНФ $\mathcal{D}$ входит одинаковое число $s$ конъюнкций вида $x_1^{\sigma_1}x_2^{\sigma_2}$ и по $t$ конъюнкций вида $x_i^{\sigma_i}$. Если их встречалось разное число, то положим $s$ или $t$ равным максимальному из них и получим оценку сверху, поскольку чем больше изначально было конъюнкций, тем большее число раз применимо правило Блейка и, следовательно, в ходе метода будет образовано не меньше конъюнкций.\par
 			Назовём этапом метода Блейка применение правила (1) к образованным на предыдущем этапе конъюнкциям, содержащим $x_j^{\delta_j}$, в паре с $x_1^{\sigma_1}x_2^{\sigma_2}$ из исходной ДНФ.
 			\begin{table}[H]
 				\centering
@@ -584,24 +588,24 @@
 			Формулы симметричны по переменным $x_1, \bar{x}_1, x_2, \bar{x}_2.$\par
 			Здесь $A, \ldots, H$ --- реализация одного из вариантов $A_i, \ldots, H_i$ из исходной ДНФ.\par
 			Каждое из выражений $A, B, C$ или $D$ может входить в конъюнкцию с переменной $x_i^{\sigma_i}$ максимум один раз: применение правила Блейка с конъюнкциями вида $x_1A,\,\bar{x}_1B, \,x_2C, \,\bar{x}_2D$ осуществляется только 1-м этапе. \par
-			Число этапов: $4k + 2.$\par
+			Число этапов: $4s + 2.$\par
 			Буква $E, F, G$ или $H$, вошедшая в описание вида конъюнкции, может удвоиться только через шаг: повторное применение правило Блейка с той же конъюнкцией невозможно.\par
-			Таким образом, впервые в описание конъюнкции $t$ одинаковых букв входят на $(1 + 2(t - 1))$-м этапе.\par
-			До шага $2k$ любое применение правила (1) давало увеличение числа букв, однако когда все варианты задействованы, добавлять больше нечего.\par
+			Таким образом, впервые в описание конъюнкции $k$ одинаковых букв входят на $(1 + 2(k - 1))$-м этапе.\par
+			До шага $2s$ любое применение правила (1) давало увеличение числа букв, однако когда все варианты задействованы, добавлять больше нечего.\par
 			Число видов конъюнкций на этапе $n:$ 
 			$$
 				\begin{cases}
-					(1 + 2n)\times4, \text{если $n \leqslant 2k,$}\\
-					(1 + 2(4k + 1 - n))\times4 \text{ иначе.}
+					(1 + 2n)\times4, \text{если $n \leqslant 2s,$}\\
+					(1 + 2(4s + 1 - n))\times4 \text{ иначе.}
 				\end{cases}
 			$$\par
 			Число видов конъюнкций на этапе $n$, в которые входит выражение $A, B, C$ или $D:$ $(n + 1)\times4.$\par
 			Число видов конъюнкций на этапе $n$, в которые не входит выражение $A, B, C$ или $D:$ $n\times4.$\par
-			Максимальная длина конъюнкции на $n$-м этапе: $\min(n + 1, 1 + 4k)$.\par
-			Максимальное число различных видов конъюнкций образуется на этапах $n = 2k$ и $n = 2k + 1$.\par
-			Оценим сверху число конъюнкций, образованных на этапе $n \leqslant 2k:$ $4(1 + 2n) \times k^{n + 1}$, где $k^{n + 1}$ --- верхняя оценка на число различных вариантов реализаций конъюнкции определённого вида.\par
+			Максимальная длина конъюнкции на $n$-м этапе: $\min(n + 1, 1 + 4s)$.\par
+			Максимальное число различных видов конъюнкций образуется на этапах $n = 2s$ и $n = 2s + 1$.\par
+			Оценим сверху число конъюнкций, образованных на этапе $n \leqslant 2s:$ $4(1 + 2n) \times s^{n + 1}$, где $s^{n + 1}$ --- верхняя оценка на число различных вариантов реализаций конъюнкции определённого вида.\par
 			%Максимальное разнообразие возникает при $n = 2k:$ $C_k^{\frac{k}{2}}.$\par
-			При $n > 2k$ число симметрично убывает.\par
+			При $n > 2s$ число симметрично убывает.\par
 			%Оценка сверху:
 			%$$
 			%	\sum_{n = 1}^{2k}4(1 + 2n) k^{n + 1} + \sum_{n = 2k + 1}^{4k}4(1 + 2(4k + 1 - n)) k^{n + 1} =
@@ -626,17 +630,22 @@
 			\end{enumerate}
 			и т.д. необходимое число раз.\par
 			Аналогичным образом могут быть получены конъюнкции, в которые входит одно из выражений $A, B, C$ или $D.$\par
-			При добавлении случая, когда какие-либо из $k_E, k_F, k_G, k_H$ равны 0, такая запись охватывает все возможные реализации на всех этапах. Оценим число этих реализаций: $4 \times (4m + 1) \times 2^k2^k2^k2^k = \underline{O}(m2^{4k}).$\par
-			После преобразований вида (2) получим следующую оценку на общее число образованных конъюнкций: $4\times (4m + 1)2^{4k} + 2\times m(m + 2^{4k}) + 2\times 2^{4k} = \underline{O}(m^2 + m2^{4k}) = \underline{O}(r2^r),$ cчитая, что длина исходной ДНФ $r$ и $m = \underline{O}(r)$ и $k = \underline{O}(r).$ \par
-			Исходя из вида оценки, можно сделать вывод о том, что наибольшее число конъюнкций при фиксированной длине $r = 4k + 4m + t$ исходной ДНФ образуется при $m = 0$ и $k = \frac{r}{4},$ а минимальное в нетривиальном случае при $k = 1$ и $m = \frac{r}{4} - 1.$\par
+			При добавлении случая, когда какие-либо из $k_E, k_F, k_G, k_H$ равны 0, такая запись охватывает все возможные реализации на всех этапах. Оценим число этих реализаций: $4 \times (4t + 1) \times 2^s2^s2^s2^s = \underline{O}(t2^{4s}).$\par
+			После преобразований вида (2) получим следующую оценку на общее число образованных конъюнкций: $4\times (4t + 1)2^{4s} + 2\times t(t + 2^{4s}) + 2\times 2^{4s} = \underline{O}(t^2 + t2^{4s}) = \underline{O}(r2^r),$ cчитая, что длина исходной ДНФ $r$ и $t = \underline{O}(r)$ и $s = \underline{O}(r).$ \par
+			Исходя из вида оценки, можно сделать вывод о том, что наибольшее число конъюнкций при фиксированной длине $r = 4t + 4s + q$ исходной ДНФ образуется при $t = 0$ и $s = \frac{r}{4},$ а минимальное в нетривиальном случае при $s = 1$ и $t = \frac{r}{4} - 1.$\par
 			Перейдём к рассмотрению случая образования наибольшего числа новых конъюнкций.\par
 	\subsubsection*{Оценка числа образованных конъюнкций в ходе метода Блейка для ДНФ специального вида}
-			Зафиксируем параметр $s$ и пусть в ходе критерия поглощения получена ДНФ
+			Пусть в ходе критерия поглощения получена ДНФ
+			$$
+				\mathcal{D} = \bigvee_{i = 1}^{s_1}x_1x_2E_i \vee \bigvee_{i = 1}^{s_2}x_1\bar{x}_2F_i \vee \bigvee_{i = 1}^{s_3}\bar{x}_1x_2G_i \vee \bigvee_{i = 1}^{s_4}\bar{x}_1\bar{x}_2H_i \vee \bigvee_iI_i,
+			$$
+			$$
+				s_1 + s_2 + s_3 + s_4 = 4s.
+			$$\par
+			Здесь каждая из конъюнкций $E_i, F_i, G_i, H_i$ содержит хотя бы одну уникальную переменную.\par
+			Например,
 			$$
 				\mathcal{D} = \bigvee\limits_{i = 1}^{s_1}x_1x_2x_{i +2} \vee \bigvee\limits_{i = 1}^{s_2}x_1\bar{x}_2x_{i + s_1 + 2} \vee \bigvee\limits_{i = 1}^{s_3}\bar{x}_1x_2x_{i + s_1 + s_2 + 2} \vee \bigvee\limits_{i = 1}^{s_4}\bar{x}_1\bar{x}_2x_{i + s_1 + s_2 + s_3 + 2},
-			$$
-			$$
-				s_1 + s_2 + s_3 + s_4 = 4s,
 			$$
 			где переменные $x_i, i = \overline{3,\,4s+2},$ встречаются только в одной степени. Её длина $L(\mathcal{D}) = 4s.$\par
 			Покажем, что максимальное число новых конъюнкций в ходе метода Блейка, применённого к ДНФ $\mathcal{D}$, образуется в случае $s_1 = s_2 = s_3 = s_4 = s.$\par
@@ -653,9 +662,9 @@
 			Образованные конъюнкции содержат переменные $x_1$ и $x_2$ только в отрицательной степени, и, следовательно, не могут больше образовывать новые конъюнкции в паре с конъюнкциями вида $\bar{x}_1\bar{x}_2D_i.$ Более того, конъюнкций без переменных $x_1$ и $x_2$ быть образовано не может: для этого понадобились бы конъюнкции вида $x_1P$ и $x_2Q.$\par
 			Все возможные новые конъюнкции:
 			$$
-				\bar{x}_1GH, \quad \bar{x}_1\underbrace{F_1\ldots F_{s_F}}_{1 \leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1 \leqslant s_G \leqslant s_3}H,$$
+				\bar{x}_1GH \quad \bar{x}_1\underbrace{F_1\ldots F_{s_F}}_{1 \leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1 \leqslant s_G \leqslant s_3}H$$
 			$$
-				 \bar{x}_2FH, \quad\bar{x}_2\underbrace{F_1\ldots F_{s_F}}_{1 \leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1 \leqslant s_G \leqslant s_3}H
+				 \bar{x}_2FH \quad\bar{x}_2\underbrace{F_1\ldots F_{s_F}}_{1 \leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1 \leqslant s_G \leqslant s_3}H
 			$$\par
 			Подсчитаем их число: $\underbrace{s_3s_4 + (2^{s_2} - 1)(2^{s_3} - 1)s_4}_{\bar{x}_1} + \underbrace{s_2s_4 + (2^{s_2} - 1)(2^{s_3} - 1)s_4}_{\bar{x}_2} = \underline{O}(s2^{2s}),$ что уступает оценке из пункта $2^{\circ}.$\par
 			$1.2^{\circ}.$ Пусть два параметра равны нулю.\par
@@ -706,17 +715,17 @@
 			\end{table}\par
 			Таким образом, новые конъюнкции, в которые входят переменные $x_1, x_2,$ имеют вид:
 			$$
-				x_1EF, \quad x_1E\underbrace{F_1\ldots F_{s_F}}_{1 \leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1 \leqslant s_G \leqslant s_3}, \quad x_1\underbrace{E_1\ldots E_{s_E}}_{1 \leqslant s_E \leqslant s_1}F\underbrace{H_1\ldots H_{s_H}}_{1 \leqslant s_H \leqslant s_4}
+				x_1EF \quad x_1E\underbrace{F_1\ldots F_{s_F}}_{1 \leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1 \leqslant s_G \leqslant s_3} \quad x_1\underbrace{E_1\ldots E_{s_E}}_{1 \leqslant s_E \leqslant s_1}F\underbrace{H_1\ldots H_{s_H}}_{1 \leqslant s_H \leqslant s_4}
 			$$
 			$$
-				\bar{x}_1GH, \quad \bar{x}_1\underbrace{E_1\ldots E_{s_E}}_{1 \leqslant s_E \leqslant s_1}G\underbrace{H_1\ldots H_{s_H}}_{1 \leqslant s_H \leqslant s_4}, \quad 
+				\bar{x}_1GH \quad \bar{x}_1\underbrace{E_1\ldots E_{s_E}}_{1 \leqslant s_E \leqslant s_1}G\underbrace{H_1\ldots H_{s_H}}_{1 \leqslant s_H \leqslant s_4} \quad 
 \bar{x}_1\underbrace{F_1\ldots F_{s_F}}_{1 \leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1 \leqslant s_G \leqslant s_3}H
 			$$
 			$$
-				x_2EG, \quad x_2E\underbrace{F_1\ldots F_{s_F}}_{1 \leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1 \leqslant s_G \leqslant s_3}, \quad x_2\underbrace{E_1\ldots E_{s_E}}_{1 \leqslant s_E \leqslant s_1}G\underbrace{H_1\ldots H_{s_H}}_{1 \leqslant s_H \leqslant s_4}
+				x_2EG \quad x_2E\underbrace{F_1\ldots F_{s_F}}_{1 \leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1 \leqslant s_G \leqslant s_3} \quad x_2\underbrace{E_1\ldots E_{s_E}}_{1 \leqslant s_E \leqslant s_1}G\underbrace{H_1\ldots H_{s_H}}_{1 \leqslant s_H \leqslant s_4}
 			$$
 			$$
-				\bar{x}_2FH, \quad \bar{x}_2\underbrace{E_1\ldots E_{s_E}}_{1 \leqslant s_E \leqslant s_1}F\underbrace{H_1\ldots H_{s_H}}_{1 \leqslant s_H \leqslant s_4}, \quad \bar{x}_2\underbrace{F_1\ldots F_{s_F}}_{1 \leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1 \leqslant s_G \leqslant s_3}H
+				\bar{x}_2FH \quad \bar{x}_2\underbrace{E_1\ldots E_{s_E}}_{1 \leqslant s_E \leqslant s_1}F\underbrace{H_1\ldots H_{s_H}}_{1 \leqslant s_H \leqslant s_4} \quad \bar{x}_2\underbrace{F_1\ldots F_{s_F}}_{1 \leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1 \leqslant s_G \leqslant s_3}H
 			$$\\
 			и (1): $\qquad\quad\,\, x_i^{\sigma} \underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}, i\in\{1,2\},\sigma\in\{0,1\}$.\par
 			Заметим, что для любой пары конъюнкций вида $x_i^{\sigma}P \vee x_i^{1 - \sigma}Q, i\in\{1, 2\},\sigma\in\{0,1\},$ где $P$ и $Q$ не содержат букв $x_1, \bar{x}_1, x_2, \bar{x}_2,$ конъюнкция $PQ$ содержит буквы из всех четырёх групп переменных. В силу реализации всех конъюнкций (1) могут образоваться любые конъюнкции вида $\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}$ и только они, поэтому можно точно подсчитать их число: $(2^{s_1} - 1) \times (2^{s_2} - 1) \times(2^{s_3} - 1) \times (2^{s_4} - 1).$\par
@@ -823,7 +832,7 @@
 \begin{matrix}\bar{x}_1\\\bar{x}_2\end{matrix} D\underbrace{F_1\ldots F_{s_F}}_{1 \leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1 \leqslant s_G \leqslant s_3}
 			\end{cases}
 			$$\par
-			Подсчитаем число новых конъюнкций, в которых участвуют переменные $x_1, x_2:$
+			Подсчитаем число новых конъюнкций вместе с теми, которые содержат только $E, F, G, H,$ c участием переменных $x_1, x_2$:
 			$$
 				f(\overline{t}, \overline{s}) = t_1\big(s_3 + s_4 + s_3s_4 + 2((2^{s_2} - 1)(2^{s_3} - 1) + (2^{s_1} - 1)(2^{s_4} - 1) + (2^{s_1} - 1)s_3(2^{s_4} - 1) + (2^{s_2} - 1)(2^{s_3} - 1)s_4) + $$ $$ + 4(2^{s_1} - 1)(2^{s_2} - 1)(2^{s_3} - 1)(2^{s_4} - 1)\big) +
 			$$
@@ -839,56 +848,56 @@
 			$$
 			+ \big(s_1s_2 + s_1(2^{s_2} - 1)(2^{s_3} - 1) + (2^{s_1} - 1)s_2(2^{s_4} - 1) + s_3s_4 + (2^{s_1} - 1)s_3(2^{s_4} - 1) + (2^{s_2} - 1)(2^{s_3} - 1)s_4 + $$ $$ +s_1s_3 + s_1(2^{s_2} - 1)(2^{s_3} - 1) + (2^{s_1} - 1)s_3(2^{s_4} - 1) + s_2s_4 + (2^{s_1} - 1)s_2(2^{s_4} - 1) + (2^{s_2} - 1)(2^{s_3} - 1)s_4 +$$ $$ +4(2^{s_1} - 1)  (2^{s_2} - 1) (2^{s_3} - 1)  (2^{s_4} - 1)\big)
 $$\par
-		Выпишем вид новых образованных конъюнкций, в которые не входят переменные $x_1, x_2:$
-		$$
-			\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}
-		$$
+		Выпишем вид новых образованных конъюнкций с участием $A, B, C, D$, в которые не входят переменные $x_1, x_2:$
+		%$$
+		%	\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}
+		%$$
 		$$
 			PQ\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4},\,\,P,Q\in\{A, B, C, D \}
 		$$
 		%\vspace{1pt}
 		$$
-			AB,\quad CD
+			AB\quad CD
 		$$
 		$$
-			ACH,\quad ADG,\quad BCF, \quad BDE
+			ACH\quad ADG\quad BCF \quad BDE
 		$$
 		$$
-			AAGH,\quad BBEF,\quad CCFH,\quad DDEG
+			AAGH\quad BBEF\quad CCFH\quad DDEG
 		$$
 		$$
-			AA\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}H,\quad
+			AA\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}H\quad
 AA\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}G\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}
 		$$
 		$$
-			AB\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3},\quad
+			AB\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}\quad
 AB\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}
 		$$
 		$$
-			AC\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}H,\quad AC\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}
+			AC\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}H\quad AC\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}
 		$$
 		$$
-			AD\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3},\quad AD\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}G\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}
+			AD\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}\quad AD\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}G\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}
 		$$
 		$$
-			BBE\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3},\quad BB\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}F\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}
+			BBE\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}\quad BB\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}F\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}
 		$$
 		$$
-			BC\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3},\quad BC\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}F\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}
+			BC\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}\quad BC\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}F\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}
 		$$
 		$$
-BDE\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3},\quad BD\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}
+BDE\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}\quad BD\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}
 		$$
 		$$
-			CC\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}H,\quad CC\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}F\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}
+			CC\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}H\quad CC\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}F\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}
 		$$
 		$$
-			CD\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3},\quad CD\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}
+			CD\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}\quad CD\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}
 		$$
 		$$
-			DDE\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3},\quad DD\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}G\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}
+			DDE\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\ldots G_{s_G}}_{1\leqslant s_G \leqslant s_3}\quad DD\underbrace{E_1\ldots E_{s_E}}_{1\leqslant s_E \leqslant s_1}G\underbrace{H_1\ldots H_{s_H}}_{1\leqslant s_H \leqslant s_4}
 		$$\par
-		Подсчитаем их число:
+		Подсчитаем их число вместе с теми, которые содержат только $E, F, G, H$:
 		$$
 			\left(\frac{1}{2} (t_1 + t_2 + t_3 + t_4)(t_1 + t_2 + t_3 + t_4 + 1) + 1\right)(2^{s_1} - 1)(2^{s_2} - 1)(2^{s_3} - 1)(2^{s_4} - 1) + t_1t_2 + t_3t_4 + 
 		$$
@@ -896,10 +905,10 @@ BDE\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\
 			+ t_1t_3s_4 + t_2t_4s_3 + t_2t_3s_2 + t_2t_4s_1 + \frac{1}{2}t_1(t_1 + 1)s_3s_4 + \frac{1}{2}t_2(t_2 + 1)s_1s_2 + \frac{1}{2}t_3(t_3 + 1)s_2s_4 +\frac{1}{2}t_4(t_4 + 1)s_1s_3 +
 		$$
 		$$
-			+ (2^{s_2} - 1)(2^{s_3} - 1) \left (\frac{1}{2}t_1(t_1 + 1)s_4 + t_1t_2 + t_1t_3s_4 + t_1t_4 +\frac{1}{2}t_2(t_2 + 1)s_1 + t_2t_3 + t_2t_4s_1 + \frac{1}{2}t_3(t_3 + 1)s_4 + t_3t_4 + \frac{1}{2}t_4(t_4 + 1)s_1\right) +
+			+ (2^{s_2} - 1)(2^{s_3} - 1) \left (\frac{1}{2}t_1(t_1 + 1)s_4 + t_1t_2 + t_1t_3s_4 + t_1t_4 +\frac{1}{2}t_2(t_2 + 1)s_1 + \right.$$ $$ \left.+ t_2t_3 + t_2t_4s_1 + \frac{1}{2}t_3(t_3 + 1)s_4 + t_3t_4 + \frac{1}{2}t_4(t_4 + 1)s_1\right) +
 		$$
 		$$
-			+ (2^{s_1} - 1)(2^{s_4} - 1) \left (\frac{1}{2}t_1(t_1 + 1)s_3 + t_1t_2 + t_1t_3 + t_1t_4s_3 + \frac{1}{2}t_2(t_2 + 1)s_2 + t_2t_3s_2 + t_2t_4 + \frac{1}{2}t_3(t_3 + 1)s_2 + t_3t_4 + \frac{1}{2}t_4(t_4 + 1)s_3\right)
+			+ (2^{s_1} - 1)(2^{s_4} - 1) \left (\frac{1}{2}t_1(t_1 + 1)s_3 + t_1t_2 + t_1t_3 + t_1t_4s_3 + \frac{1}{2}t_2(t_2 + 1)s_2 + \right.$$ $$ \left.+ t_2t_3s_2 + t_2t_4 + \frac{1}{2}t_3(t_3 + 1)s_2 + t_3t_4 + \frac{1}{2}t_4(t_4 + 1)s_3\right)
 		$$
 		% здесь был случай трёх переменных
 		\subsubsection*{Условия на образование единичной конъюнкции}
@@ -937,151 +946,72 @@ BDE\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\
 		\end{minipage}\par
 		Остальные условия (т.е. случай образования $x_1$ или $\bar{x}_1$ после цепочки из 2-х применений правила Блейка) избыточны, т.к. включают в себя хотя бы одно из перечисленных выше.\par
 		Таким образом достаточно провести только первые 2 этапа метода Блейка, чтобы понять, будет ли образована единичная конъюнкция.
-		\subsection{Правило поглощения}
-			После того, как правило Блейка больше неприменимо, в методе Блейка необходимо выполнить все поглощения ($K \vee KK' = K$).\par
+		\subsection{Поглощение в методе Блейка}
+			После того, как правило Блейка больше неприменимо, в методе Блейка необходимо выполнить все поглощения ($K_1 \vee K_1K_2 = K_1$).\par
 			Для рассмотренных выше видах ДНФ с двумя переменными в различных степенях проверим, какие из конъюнкций точно будут поглощены.\par
 			$1^{\circ}.$ Рассмотрим ДНФ, общий вид которой выглядит следующим образом:
 			$$
 				\mathcal{D} = \bigvee_{i = 1}^{s_1}x_1x_2E_i \vee \bigvee_{i = 1}^{s_2}x_1\bar{x}_2F_i \vee \bigvee_{i = 1}^{s_3}\bar{x}_1x_2G_i \vee \bigvee_{i = 1}^{s_4}\bar{x}_1\bar{x}_2H_i \vee \bigvee_iI_i.
 			$$\par
-			То, как выглядят полученные применением правила Блейка конъюнкции, подробно описано выше (см. стр. 19??). Среди них конъюнкциями $x_1EF, \bar{x}_1GH, x_2EG, \bar{x}_2FH$ и $EFGH$ поглотятся все остальные новые образованные конъюнкции, поскольку буквы в их записи будут являться подмножествами букв конъюнкций большего ранга. Сами они ничем другим поглотиться не могут.\par
+			То, как выглядят полученные применением правила Блейка конъюнкции, подробно описано выше (см. стр. 18-19). Среди них конъюнкциями
+			$$x_1EF, \bar{x}_1GH, x_2EG, \bar{x}_2FH EFGH$$
+			поглотятся все остальные новые образованные конъюнкции, поскольку буквы в их записи будут являться подмножествами букв конъюнкций большего ранга. Сами они ничем другим поглотиться не могут.\par
 			Исходя из этого нетрудно подсчитать число новообразованных конъюнкций, которые не будут поглощены в ходе метода Блейка:
 			$$
 				f_{new}(\bar{s}) = s_1s_2 + s_1s_3 + s_2s_4 + s_3s_4 + s_1s_2s_3s_4.
 			$$\par
 			Её максимум также достигается в случае равенства $s_1 = s_2 = s_3 = s_4.$
 \par
-			
+			\begin{table}[H]
+				\centering
+				\begin{tabular}{|c|c|c|}
+					\hline
+					$s$ & $n$ & Число новых конъюнкций\\
+					\hline
+					1 & 6 & 5\\
+					\hline
+					2 & 10 & 32\\
+					\hline
+					3 & 14 & 117\\
+					\hline
+				\end{tabular}
+				\caption*{Примеры для $s = 1, 2, 3$}
+			\end{table}\par
 			$2^{\circ}.$ Более общий случай:
 			$$
 				\bigvee_{i = 1}^{t_1}x_1A_i \vee \bigvee_{i = 1}^{t_2}\bar{x}_1B_i \vee \bigvee_{i = 1}^{t_3}x_2C_i \vee \bigvee_{i = 1}^{t_4}\bar{x}_2D_i \bigvee_{i = 1}^{s_1}x_1x_2E_i \vee \bigvee_{i = 1}^{s_2}x_1\bar{x}_2F_i \vee \bigvee_{i = 1}^{s_3}\bar{x}_1x_2G_i \vee \bigvee_{i = 1}^{s_4}\bar{x}_1\bar{x}_2H_i \vee \bigvee_iI_i.
 			$$\par
-			Описание новых образованных конъюнкций см. на стр. 21-23??\par
+			Описание новых образованных конъюнкций см. на стр. 21-23.\par
 			Здесь все остальные образованные конъюнкции поглотят конъюнкции вида
 			$$
-				x_1EF, \bar{x}_1GH, x_2EG, \bar{x}_2FH
+				x_1EF\quad \bar{x}_1GH\quad  x_2EG\quad  \bar{x}_2FH
 			$$
 			$$
-				x_1CF, x_1DE,
-				\bar{x}_1CH, \bar{x}_1DG,
-				x_2AG, x_2BE,
-				\bar{x}_2AH, \bar{x}_2BF
+				x_1CF\quad  x_1DE\quad 
+				\bar{x}_1CH\quad  \bar{x}_1DG$$ $$
+				x_2AG\quad  x_2BE\quad 
+				\bar{x}_2AH\quad  \bar{x}_2BF
 			$$
 			$$
-				EFGH, AB, CD, ACH, ADG, BCF, BDE, AGH, BEF, CFH, DEG
+				EFGH\quad  AB\quad  CD$$
+			$$
+				ACH\quad  ADG\quad  BCF\quad  BDE
+			$$
+			$$
+				AGH\quad  BEF\quad  CFH\quad  DEG
 			$$\par
 			Подсчитаем их число:
 			$$
-				f_{new}(\bar{s}) = s_1s_2 + s_1s_3 + s_2s_4 + s_3s_4 + s_1s_2s_3s_4 +
+				f_{new}(\bar{t}, \bar{s}) = s_1s_2 + s_1s_3 + s_2s_4 + s_3s_4 + s_1s_2s_3s_4 +
 			$$
 			$$ 
 				t_1(s_3 + s_4 + s_3s_4) + t_2(s_1 + s_2 + s_1s_2) + t_3(s_2 + s_4 + s_2s_4) + t_4(s_1 + s_3 + s_1s_3) + 
 			$$
 			$$
-				+ t_1t_2 + t_3t_4 + t_1t_3s_4 + t_1t_4s_3 + t_2t_3s_2 + t_2t_4s_1
-			$$
-	\section{Поиск нуля функции}
-		При проверке поглощения конъюнкции с помощью критерия поглощения возникает задача установить, равна ли полученная ДНФ тождественной единице. Если удаётся найти хотя бы один ноль соответствующей этой ДНФ функции, то это означает, что функция тождественной единицей не является, и таким образом проверка выполнена, и рассматриваемая конъюнкция не поглощается своей окрестностью 1-го порядка.\par
-		Задача точного установления наличия нуля булевой функции, по-видимому, является сложной. Предложим несколько способов перебора точек функции, которые в некоторых случаях приводят к быстрому обнаружению нулевой точки.\par
-		Пусть заданы $n$ --- число переменных, конъюнкция $K = x_1\ldots x_q$ ранга $q$ (с помощью замены переменных всегда можно добиться представления в таком виде) и ДНФ $\bigvee\limits_iK'_i.$\par
-		В ходе применения критерия поглощения после удаления букв, входящих в конъюнкцию $K$, образована ДНФ $\mathcal{D} = \bigvee\limits_{i = 1}^rK_i,$ в которую входят $2n - q$ различных букв: $x_{q + 1},\ldots, x_n, \bar{x}_1,\ldots,\bar{x}_n$. Требуется установить, верно ли, что $\mathcal{D} \equiv 1.$\par
-		Поскольку в $\mathcal{D}$ переменные $x_1,\ldots, x_q$ могут входить только в степени ноль, то их значение сразу можно положить равным 1, что сразу обнулит какую-то часть конъюнкций. Сосредоточимся на определении значения переменных $x_{q + 1},\ldots, x_n$ и обнулении оставшихся конъюнкций.\par
-		$1^{\circ}.$ Рассмотрим следующий алгоритм. Для каждой из $r$ конъюнкций $K$ ДНФ $\mathcal{D}$ будем определять множество остальных конъюнкций, которые обнуляются при обнулении одной из букв $K.$ Если обнуление некоторого множества букв $K$ приводит к обнулению всех остальных конъюнкций, то таким образом найден ноль функции и алгоритм можно завершить.\par
-		\begin{algorithm}[H]
-				\SetAlgoLined
-				\KwData{$\mathcal{D} = \{K_i\}_{i = 1}^r$ --- набор конъюнкций ДНФ $\mathcal{D}$}
-		 		\KwResult{$(\alpha_1,\ldots,\alpha_n)$ --- ноль ДНФ, или сообщение о том, что ноль не найден}
-				\For{$i = \overline{1,\,r}$}{%\textnormal{каждой $K \in \mathcal{D}$}}{
-					$X \mathbin{:=} \varnothing$ --- множество остальных конъюнкций, обращающихся в ноль при обнулении переменных рассматриваемой конъюнкции $K_i = x_{i_1}^{\sigma_1}\ldots x_{i_k}^{\sigma_k}$ ранга $k$\;
-					$\tilde \alpha^n \mathbin{:=} (0, \ldots, 0)$ --- искомый ноль\;
-					\For{$j = \overline{1,\,k}$}{
-						$C_j \mathbin{:=} \{\text{множество конъюнкций, содержащих букву $x_{i_j}^{\sigma_j}$}\}$\;
-						$X \mathbin{:=} X \cup C_j$\;
-						$\alpha_{i_j} \mathbin{:=} \bar{\sigma}_j$\;
-					}
-					\If{$X = \mathcal{D},$}{
-						все конъюнкции обнулены и нулевая точка найдена: \textbf{вернуть} $\tilde \alpha^n$\;
-					}
-				}
-				\textbf{Вернуть} сообщение о том, что ноль не найден\;
-			\caption{Поиск нуля функции}
-			\label{all_conj}
-		\end{algorithm}\par
-		Разумеется, далеко не всегда рассматриваемая конъюнкция будет иметь большое пересечение по буквам с остальными конъюнкциями ДНФ.\par
-		\begin{example}
-				Рассмотрим ДНФ, уже приведённую в качестве примера в \ref{jab}:
-				$$
-					\mathcal{D} = x_1\bar{x}_2 \vee x_2\bar{x}_3 \vee \ldots \vee x_n \bar{x}_1.
-				$$\par
-				В ней каждая буква встречается ровно один раз, и обнуление букв одной конъюнкции не приводит к обнулению никакой другой.
-		\end{example}\par
-		% Для каждого алгоритма привести три примера: удачный (ноль найден), неудачный (ноль не найден, хотя он есть) и неопределённый (не найден ноль, его нет).
-		$2^{\circ}.$ Предложим жадный алгоритм, основанный на частоте встречаемости букв в записи ДНФ $\mathcal{D}.$\par
-		Для каждой буквы $x_1,\ldots, x_n,\bar{x}_1,\ldots,\bar{x}_n$ определим конъюнкции, в которые они входят, и упорядочим их убыванию встречаемости. Таким образом если первой оказалась буква $x_i^{\sigma_i},$ то мы положим значение переменной $x_i$ равным $\bar{\sigma}_i,$ что обнулит максимальное число конъюнкций. Заметим, что конъюнкции, содержание букву $x_i^{\bar{\sigma}_i},$ уже не могут быть обращены в ноль с помощью этой переменной.\par
-		Формализуем процесс установления значения переменных и вычёркивания обнулённых конъюнкций.\par
-		Для каждой ДНФ строится матрица $M \in \{0, 1, \Delta\}^{r \times n},$ где каждая строка $M_i, i=\overline{1,\,r},$ представляет собой запись конъюнкции $K_i$:
-			$$
-				M_{ij} = \begin{cases}
-					0,\text{ если $K_i$ содержит букву $\bar{x}_j$,}\\
-					1,\text{ если $K_i$ содержит букву $x_j$,}\\
-					\Delta,\text{ иначе.}\\
-				\end{cases}.
+				+ t_1t_2 + t_3t_4 + t_1t_3s_4 + t_1t_4s_3 + t_2t_3s_2 + t_2t_4s_1.
 			$$\par
-			Когда мы фиксируем значение некоторой переменной $x_j = \sigma,$ из матрицы $M$ вычёркиваются все строки $M_i,$ для которых $M_{ij} = \sigma,$ а также сам $j$-й столбец матрицы. Затем процедура повторяется для следующей переменной.\par
-			Если в результате остался один константный столбец, целиком состоящий из нулей или из единиц, то полученная точка действительно является нулевой. В противном случае построенная комбинация на обнуляет ДНФ.\par
-		\begin{example}
-				Рассмотрим ДНФ
-				$$
-					\mathcal{D} = x_1x_2\bar{x}_3 \vee x_1x_3 \vee \bar{x}_1.
-				$$\par
-				Соответствующая ей матрица имеет вид:
-				%$$
-					%\begin{matrix}
-					%	1 & 1 & 0\\
-					%	1 & \Delta & 1\\
-					%	0 & \Delta & \Delta\\
-					%\end{matrix}
-					%\SmallMatrix{
-					%	1 & 1 & 0\\1 & \Delta & 1\\ 0 & \Delta & \Delta\\
-					%}
-				%$$
-				$$
-				\begin{tikzpicture}
-					\matrix (magic) [%
-					matrix of nodes,
-					text width=5mm,
-					text badly centered
-					] {%
-						1 & 1 & 0\\
-						1 & $\Delta$ & 1\\
-						0 & $\Delta$ & $\Delta$\\
-					};
- 				\end{tikzpicture}
-				$$\par
-				Здесь самой часто встречающейся буквой является $x_1.$ Положим значение этой переменной равным нулю, это обнулит первые две конъюнкции, что соответствует вычёркиванию первых двух строк матрицы:
-				$$
-				\begin{tikzpicture}
-					\matrix (magic) [%
-					matrix of nodes,
-					text width=5mm,
-					text badly centered
-					] {%
-						1 & 1 & 0\\
-						1 & $\Delta$ & 1\\
-						0 & $\Delta$ & $\Delta$\\
-					};
-					\draw[thick,black] (magic-1-1.north) -- (magic-3-1.south);
-					\draw[thick,black] (magic-1-1.west) -- (magic-1-3.east);
-					\draw[thick,black] (magic-2-1.west) -- (magic-2-3.east);
- 				\end{tikzpicture}
-				$$\par
-				В результате в последней конъюнкции не осталось незафиксированных букв, которые могли бы обратить её в ноль. Данный алгоритм не смог найти ноль ДНФ $\mathcal{D},$ хотя он существует, например, точка $(1, 0, 0).$
-		\end{example}\par
-		$3^{\circ}.$ Предложим модификацию алгоритма из предыдущего пункта. Разобьём конъюнкции на группы в соответствии с их рангом. Будем упорядочивать буквы по частоте их встречаемости не среди всех конъюнкций, а среди конъюнкций наименьшего ранга. Если среди них встретились не все переменные, то их порядок определяется встречаемостью конъюнкций на единицу большего ранга и т.д.\par
-		Такой подход основывается на эвристике о том, что чем меньше букв содержит конъюнкция, тем <<сложнее>> её обнулить. Например, конъюнкции ранга 1 образуют необходимое условие на значение соответствующей переменной в нулевой точке.\par
-		Можно обобщить эту идею, введя весовую схему, которая будет оценивать <<важность встречаемости>> каждой буквы, и затем определить порядок обнуления переменных в соответствии с отсортированным по весам списком букв.\par
-
-	\section{Сравнение методов поточечного покрытия и критерия поглощения}
+			При этом максимум достигается в случае $t_1 = t_2 = t_3 = t_4 = 0, s_1=s_2=s_3=s_4,$ что соответствует описанному выше случаю $1^{\circ}.$
+\section{Сравнение методов поточечного покрытия и критерия поглощения}
 		Пусть необходимо проверить, поглощается ли конъюнкция $K$ ДНФ $\mathcal{D} = \bigvee\limits_{i = 1}^r K_i.$\par
 		Пусть $n$ --- число переменных, $q$ --- ранг конъюнкции $K.$\\
 		\textbf{Шаг 1.} Определим окрестность 1-го порядка конъюнкции $K$: $S_1(K, \mathcal{D}) = \{K_i\}.$\par
@@ -1133,6 +1063,109 @@ BDE\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\
 			В ходе применения метода Блейка к $\mathcal{D}'$ образуется не менее $(2^3-1)^4$ новых конъюнкций.\par
 			При поточечном покрытии было бы необходимо перебрать $12 \times 2 + 3 \times 2^2$ точек, что значительно меньше.
 		\end{example}
+	\section{Поиск нуля функции}
+		При проверке поглощения конъюнкции с помощью критерия поглощения возникает задача установить, равна ли полученная ДНФ тождественной единице. Если удаётся найти хотя бы один ноль соответствующей этой ДНФ функции, то это означает, что функция тождественной единицей не является. Таким образом проверка выполнена, и рассматриваемая конъюнкция не поглощается своей окрестностью 1-го порядка.\par
+		Задача точного установления наличия нуля булевой функции, по-видимому, является сложной. Предложим несколько способов перебора точек функции, которые в некоторых случаях приводят к быстрому обнаружению нулевой точки.\par
+		Пусть заданы $n$ --- число переменных, конъюнкция $K = x_1\ldots x_q$ ранга $q$ (с помощью замены переменных всегда можно добиться представления в таком виде) и ДНФ $\bigvee\limits_iK'_i.$\par
+		В ходе применения критерия поглощения после удаления букв, входящих в конъюнкцию $K$, образована ДНФ $\mathcal{D} = \bigvee\limits_{i = 1}^rK_i,$ в которую входят $2n - q$ различных букв: $x_{q + 1},\ldots, x_n, \bar{x}_1,\ldots,\bar{x}_n$. Требуется установить, верно ли, что $\mathcal{D} \equiv 1.$\par
+		Поскольку в $\mathcal{D}$ переменные $x_1,\ldots, x_q$ могут входить только в степени ноль, то их значение сразу можно положить равным 1, что сразу обнулит какую-то часть конъюнкций. Сосредоточимся на определении значения переменных $x_{q + 1},\ldots, x_n$ и обнулении оставшихся конъюнкций.\par
+		$1^{\circ}.$ Рассмотрим следующий алгоритм. Для каждой из $r$ конъюнкций $K$ ДНФ $\mathcal{D}$ будем определять множество остальных конъюнкций, которые обнуляются при обнулении одной из букв $K.$ Если обнуление некоторого множества букв $K$ приводит к обнулению всех остальных конъюнкций, то таким образом найден ноль функции и алгоритм можно завершить.\par
+		\begin{algorithm}[H]
+				\SetAlgoLined
+				\KwData{$\mathcal{D} = \{K_i\}_{i = 1}^r$ --- набор конъюнкций ДНФ $\mathcal{D}$}
+		 		\KwResult{$(\alpha_1,\ldots,\alpha_n)$ --- ноль ДНФ, или сообщение о том, что ноль не найден}
+				\For{$i = \overline{1,\,r}$}{%\textnormal{каждой $K \in \mathcal{D}$}}{
+					$X \mathbin{:=} \varnothing$ --- множество остальных конъюнкций, обращающихся в ноль при обнулении переменных рассматриваемой конъюнкции $K_i = x_{i_1}^{\sigma_1}\ldots x_{i_k}^{\sigma_k}$ ранга $k$\;
+					$\tilde \alpha^n \mathbin{:=} (0, \ldots, 0)$ --- искомый ноль\;
+					\For{$j = \overline{1,\,k}$}{
+						$C_j \mathbin{:=} \{\text{множество конъюнкций, содержащих букву $x_{i_j}^{\sigma_j}$}\}$\;
+						$X \mathbin{:=} X \cup C_j$\;
+						$\alpha_{i_j} \mathbin{:=} \bar{\sigma}_j$\;
+					}
+					\If{$X = \mathcal{D},$}{
+						все конъюнкции обнулены и нулевая точка найдена: \textbf{вернуть} $\tilde \alpha^n$\;
+					}
+				}
+				\textbf{Вернуть} сообщение о том, что ноль не найден\;
+			\caption{Поиск нуля функции}
+			\label{all_conj}
+		\end{algorithm}\par
+		Разумеется, далеко не всегда рассматриваемая конъюнкция будет иметь большое пересечение по буквам с остальными конъюнкциями ДНФ.\par
+		\begin{example}
+				Рассмотрим ДНФ, уже приведённую в качестве примера в \ref{jab}:
+				$$
+					\mathcal{D} = x_1\bar{x}_2 \vee x_2\bar{x}_3 \vee \ldots \vee x_n \bar{x}_1.
+				$$\par
+				В ней каждая буква встречается ровно один раз, и обнуление букв одной конъюнкции не приводит к обнулению никакой другой.
+		\end{example}\par
+		% Для каждого алгоритма привести три примера: удачный (ноль найден), неудачный (ноль не найден, хотя он есть) и неопределённый (не найден ноль, его нет).
+		$2^{\circ}.$ Предложим жадный алгоритм, основанный на частоте встречаемости букв в записи ДНФ $\mathcal{D}.$\par
+		Для каждой буквы $x_1,\ldots, x_n,\bar{x}_1,\ldots,\bar{x}_n$ определим конъюнкции, в которые они входят, и упорядочим их убыванию встречаемости. Таким образом если первой оказалась буква $x_i^{\sigma_i},$ то мы положим значение переменной $x_i$ равным $\bar{\sigma}_i,$ что обнулит максимальное число конъюнкций. Заметим, что конъюнкции, содержание букву $x_i^{\bar{\sigma}_i},$ уже не могут быть обращены в ноль с помощью этой переменной.\par
+		Формализуем процесс установления значения переменных и вычёркивания обнулённых конъюнкций.\par
+		Для каждой ДНФ строится матрица $M \in \{0, 1, \Delta\}^{r \times n},$ где каждая строка $M_i,$\\$i=\overline{1,\,r},$ представляет собой запись конъюнкции $K_i$:
+			$$
+				M_{ij} = \begin{cases}
+					0,\text{ если $K_i$ содержит букву $\bar{x}_j$,}\\
+					1,\text{ если $K_i$ содержит букву $x_j$,}\\
+					\Delta,\text{ иначе.}\\
+				\end{cases}
+			$$\par
+			Когда мы фиксируем значение некоторой переменной $x_j = \sigma,$ из матрицы $M$ вычёркиваются все строки $M_i,$ для которых $M_{ij} = \sigma,$ а также сам $j$-й столбец матрицы. Затем процедура повторяется для следующей переменной.\par
+			Порядок обнуления переменных определяется частотой их встречаемости.\par
+			Если на каком-то этапе все строки матрицы оказались вычеркнуты, то ноль функции найден. Если в результате остался один константный столбец, целиком состоящий из нулей или из единиц, то полученная точка действительно является нулевой. В противном случае построенная комбинация не обнуляет ДНФ.\par
+		\begin{example}
+				Рассмотрим ДНФ
+				$$
+					\mathcal{D} = x_1x_2\bar{x}_3 \vee x_1x_3 \vee \bar{x}_1.
+				$$\par
+				Соответствующая ей матрица имеет вид:
+				%$$
+					%\begin{matrix}
+					%	1 & 1 & 0\\
+					%	1 & \Delta & 1\\
+					%	0 & \Delta & \Delta\\
+					%\end{matrix}
+					%\SmallMatrix{
+					%	1 & 1 & 0\\1 & \Delta & 1\\ 0 & \Delta & \Delta\\
+					%}
+				%$$
+				$$
+				\begin{tikzpicture}
+					\matrix (magic) [%
+					matrix of nodes,
+					text width=5mm,
+					text badly centered
+					] {%
+						1 & 1 & 0\\
+						1 & $\Delta$ & 1\\
+						0 & $\Delta$ & $\Delta$\\
+					};
+ 				\end{tikzpicture}
+				$$\par
+				Здесь самой часто встречающейся буквой является $x_1.$ Положим значение этой переменной равным нулю, это обнулит первые две конъюнкции, что соответствует вычёркиванию первых двух строк матрицы:
+				$$
+				\begin{tikzpicture}
+					\matrix (magic) [%
+					matrix of nodes,
+					text width=5mm,
+					text badly centered
+					] {%
+						1 & 1 & 0\\
+						1 & $\Delta$ & 1\\
+						0 & $\Delta$ & $\Delta$\\
+					};
+					\draw[thick,black] (magic-1-1.north) -- (magic-3-1.south);
+					\draw[thick,black] (magic-1-1.west) -- (magic-1-3.east);
+					\draw[thick,black] (magic-2-1.west) -- (magic-2-3.east);
+ 				\end{tikzpicture}
+				$$\par
+				В результате в последней конъюнкции не осталось незафиксированных букв, которые могли бы обратить её в ноль. Данный алгоритм не смог найти ноль ДНФ $\mathcal{D},$ хотя он существует, например, точка $(1, 0, 0).$
+		\end{example}\par
+		$3^{\circ}.$ Предложим модификацию алгоритма из предыдущего пункта. Разобьём конъюнкции на группы в соответствии с их рангом. Будем упорядочивать буквы по частоте их встречаемости не среди всех конъюнкций, а среди конъюнкций наименьшего ранга. Если среди них встретились не все переменные, то их порядок определяется встречаемостью конъюнкций на единицу большего ранга и т.д.\par
+		Такой подход основывается на эвристике о том, что чем меньше букв содержит конъюнкция, тем <<сложнее>> её обнулить. Например, конъюнкции ранга 1 образуют необходимое условие на значение соответствующей переменной в нулевой точке.\par
+		Можно обобщить эту идею, введя весовую схему, которая будет оценивать <<важность встречаемости>> каждой буквы, и затем определить порядок обнуления переменных в соответствии с отсортированным по весам списком букв.\par
+\end{document}
+	
 \newpage
 
 			%\section{Новые подходы и~результаты}
