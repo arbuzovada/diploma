@@ -757,7 +757,7 @@
 					&$\bar{x}_2CEFGH$ $x_2DEFGH$ &\\
 					\hline
 				\end{tabular}
-				\caption{$k = 1$}
+				\caption{$s = 1$}
 			\end{table}\par
 			Формулы симметричны по переменным $x_1, \bar{x}_1, x_2, \bar{x}_2.$\par
 			Здесь $A, \ldots, H$ --- реализация одного из вариантов $A_i, \ldots, H_i$ из исходной ДНФ.\par
@@ -1364,6 +1364,7 @@ BDE\underbrace{F_1\ldots F_{s_F}}_{1\leqslant s_F \leqslant s_2}\underbrace{G_1\
 \newpage
 
 \section*{Список литературы}
+\addcontentsline{toc}{section}{Список литературы}
 \noindent
 $[1]$ {\it Журавлёв Ю. И.} Оценки сложности алгоритмов построения минимальных дизъюнктивных форм для функций алгебры логики. // Сб. Трудов Института математики Сиб. отд. АНСССР. Дискретный Анализ. 1964. Вып. 3.\\
 $[2]$ {\it Журавлёв Ю. И., Коган А. Ю.} Реализация булевых функций с малым числом нулей дизъюнктивными нормальными формами и смежные задачи. // Докл. АН СССР. 1985. Т. 285. № 4. С. 795-799.\\
@@ -1378,6 +1379,87 @@ $[9]$ {\it Коган А. Ю.} О дизъюнктивных нормальны�
 $[10]$ {\it Журавлёв Ю. И.} Об алгебраическом подходе к решению задач распознавания или классификации. // Пробл. кибернетики. М.: Наука, 1978. Вып. 33. С. 5-68\\
 $[11]$ {\it Соколов П. Л.} Об оптимальной расшифровке монотонных функций алгебры логики // Ж. вычисл. матем. и матем. физ. 1982. Т. 22. № 2. С. 499-461.\\
 $[12]$ Сборник <<Проблемы кибернетики>>, вып. 8, М.; издательство <<Наука>>, 1962.\\
+\cite{voron_report}
+\newpage
+
+\renewcommand{\bibname}{Список литературы}
+\addcontentsline{toc}{section}{\bibname}
+
+
+\def\BibUrl#1.{}\def\BibAnnote#1.{}
+%\def\BibUrl#1{\\{\footnotesize\tt\def~{\char126} http://#1}}
+\bibliographystyle{plain}
+
+\begin{thebibliography}{1}
+
+\bibitem{voron_report}
+{\it Журавлёв Ю. И.} Оценки сложности алгоритмов построения минимальных дизъюнктивных форм для функций алгебры логики. // Сб. Трудов Института математики Сиб. отд. АНСССР. Дискретный Анализ. 1964. Вып. 3.
+\newblock Машинное обучение
+%\newblock {\em методичка}, (вып. 455, №3. с.268-271), 2014.
+
+\bibitem{voron_potap_tutorial_on_ptm}
+Potapenko A.~A. Vorontsov K.~V.
+\newblock Tutorial on probabilistic topic modeling: Additive regularization for stochastic matrix factorization.
+\newblock {\em AIST, Analysis of Images, Social networks and Texts. -- Springer International Publishing Switzerland, 2014. Communications in Computer and Information Science (CCIS)}, (Vol. 436. pp. 29-46.), 2014.
+
+\bibitem{lda}
+Blei,~David~M., Ng,~Andrew~Y., Jordan,~Michael~I.
+\newblock Latent Dirichlet allocation.
+\newblock {\em Journal of Machine Learning Research.}, (3 (4-5): pp. 993-1022), 2003.
+
+\bibitem{voron_others_kdd}
+ Konstantin~Vorontsov, Oleksandr~Frei, Murat~Apishev, Peter~Romov, Marina~Dudarenko.
+\newblock Non-bayesian additive regularization for multimodal topic modeling of large collections.
+\newblock {\em ???}, 2015.
+
+\bibitem{plsa}
+Thomas~Hofmann.
+\newblock Probabilistic latent semantic indexing.
+\newblock {\em Proceedings of the 22nd annual international ACM SIGIR conference on Research and development in information retrieval.}, (Pp. 50-57), 1999.
+
+\bibitem{online_lda}
+D.~Blei M.~Hoffman and F.~Bach.
+\newblock Online learning for latent dirichlet allocation.
+\newblock {\em Neural Information Processing Systems}, 2010.
+
+\bibitem{ad_lda}
+P.~Smyth D.~Newman, A.~Asuncion and M.~Welling.
+\newblock Online learning for latent dirichlet allocation.
+\newblock {\em Neural Information Processing Systems}, 2009.
+
+\bibitem{plda}
+Matt~Stanton Wen-Yen~Chen Yi~Wang, Hongjie~Bai and Edward~Y.~Chang.
+\newblock Plda: Parallel latent dirichlet allocation for large-scale applications.
+\newblock {\em AAIM}, 2009.
+
+\bibitem{plda_plus}
+Zhiyuan~Liu, Yuzhou~Zhang, Edward~Y.~Chang, and Maosong~Sun.
+\newblock Plda+: Parallel latent dirichlet allocation with data placement and pipeline processing.
+\newblock {\em ACM Transactions on Intelligent Systems and Technology, special issue on Large Scale Machine Learning}, 2011.
+
+\bibitem{y_lda}
+Alexander~Smola and Shravan~Narayanamurthy.
+\newblock An architecture for parallel topic models.
+\newblock {\em Very Large Data Bases}, 2010.
+
+\bibitem{mr_lda}
+Ke~Zhai, Jordan~Boyd-Graber, Nima~Asadi, Mohamad~Alkhouja.
+\newblock Mr. LDA: A Flexible Large Scale Topic Modeling Package using Variational Inference in MapReduce.
+\newblock {\em ACM}, 2012.
+
+\bibitem{gensim}
+Radim~Rehurek and Petr~Sojka.
+\newblock Software framework for topic modelling with large corpora.
+\newblock {\em Proc. LREC Workshop on New Challenges for NLP Frameworks}, 2010.
+
+\bibitem{rubin}
+T.~N.~Rubin, A.~Chambers, P.~Smyth, and M.~Steyvers.
+\newblock Statistical topic models for multi-label document classification.
+\newblock {\em Machine Learning}, (vol. 88, no. 1-2, pp. 157-208), 2012.
+
+\end{thebibliography}
+
+
 \end{document}
 
 
