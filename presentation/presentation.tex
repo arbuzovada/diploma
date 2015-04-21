@@ -1,0 +1,223 @@
+% !TEX encoding = UTF-8 Unicode
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------
+% Description of CC Drell-Yan in SANC
+% A. Arbuzov
+% W-mass workshop, Milano 17-18 March 2009
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------
+\documentclass{beamer}
+%\usepackage[cp866]{inputenc}
+\usepackage[utf8]{inputenc}
+%\usepackage[koi8-r]{inputenc}
+%\usepackage[russian]{babel}
+\usepackage[russian]{babel}
+\usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps,pgfshade}
+\usepackage{beamerthemesplit}
+\usepackage{rotate}
+\usepackage{verbatim}
+%\usepackage[euler]{textgreek}
+\usepackage{bm}
+\usepackage{amssymb,amsmath,amscd,epsfig}
+%\usepackage[dvips]{color}
+\usepackage{lscape}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{caption}
+%\usepackage{axodraw}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{graphicx}
+%\usetheme{Rochester}
+\setbeamercolor{background canvas}{bg=green!0}
+\definecolor{colorone}{rgb}{0.0,0.35,0.35}
+\definecolor{colortwo}{rgb}{0.0,0.0,0.35}
+\definecolor{colorthree}{rgb}{0.85,0.0,0.0}
+\definecolor{colorfour}{rgb}{0.05,0.56,0.05}
+\definecolor{colorfive}{rgb}{1.0,0.18,0.92}
+\definecolor{colorsix}{rgb}{0.5,0.188,0.0}
+\newcommand{\mblue}{\color{colorone}}
+\newcommand{\darkblue}{\color{colortwo}}
+\newcommand{\red}{\color{colorthree}}
+\newcommand{\darkgreen}{\color{colorfour}}
+\newcommand{\magenda}{\color{colorfive}}
+\newcommand{\darkbrown}{\color{colorsix}}
+\newcommand{\myfont}{}
+\newcommand{\be}{\begin{eqnarray}}
+\newcommand{\ee}{\end{eqnarray}}
+\newcommand{\bi}{\bibitem}
+\newcommand{\lar}{\leftarrow}
+\newcommand{\rar}{\rightarrow}
+\newcommand{\lrar}{\leftrightarrow}
+\newcommand{\mplq}{m_{Pl}^2}
+\newcommand{\mnu}{m_\nu}
+\newcommand{\nnu}{n_\nu}
+\newcommand{\ngam}{n_\gamma}
+\newcommand{\rhoij}{\rho_{ij}}
+\newcommand{\dm}{\delta m^2}
+\newcommand{\tc}{\textcolor}
+\newcommand{\tcblue}{\textcolor{blue}}
+\newcommand{\tcgreen}{\textcolor{green}}
+\newcommand{\tcred}{\textcolor{red}}
+\newcommand{\vs}{\vspace}
+\newcommand{\nin}{\noindent}
+\newcommand{\nonu}{\nonumber}
+\newcommand{\rv}{\rho_{vac}}
+\newcommand{\rc}{\rho_{c}}
+\newcommand{\npni}{\newpage\noindent}
+\def\mc{\mathcal}
+%\def\be{\begin{equation}}
+%\def\ee{\end{equation}}
+\def\mpl{m_{Pl}}
+\def\mn{{\mu\nu}}
+\def\D{\mc D}
+\def\-g{\sqrt{-g}}
+%\renewcommand\rho{\varrho}
+%\newcommand{\npg}{\newpage}
+%%\definecolor{gold}{rgb}{0.89,0.78,0}
+%%\definecolor{grn05}{rgb}{0,0.5,0}
+%%\newcommand{\tcgold}{\textcolor{gold}}
+\def\Ob{\Omega_b}
+\def\Oc{\Omega_{\rm cdm}}
+\def\Ok{\Omega_k}
+\def\Ol{\Omega_\Lambda}
+\def\Om{\Omega_m}
+\def\etal{{\frenchspacing\it et al.}}
+\def\mpl{m_{Pl}}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{caption}[numbered]
+
+\newcolumntype{x}[1]{>{\centering\hspace{0pt}}p{#1}}
+
+%\preauthor{\begin{flushright}\large \lineskip 0.5em}
+%\postauthor{\par\end{flushright}}
+
+\title[]
+{\LARGE \myfont Построение дизъюнктивных нормальных форм для специальных классов булевых функций}
+%\author[shortname]{author1 \inst{1} \and author2 \inst{2}}
+\author[Д.\,А. Арбузова]
+{\large \myfont {\it Автор}: студент 517 группы\\ {\tcblue {Д.\,А. Арбузова}}\\
+{\it Научный руководитель}: д. ф.-м. н., академик РАН\\ {\tcblue {Ю.\,И. Журавлёв}}}
+%{\Large \myfont Научный руководитель:{\tcblue {Д. А. Арбузова}}}
+\institute[ВМК МГУ] % (optional)
+{\large ВМК МГУ}
+\date{\large %\myfont \large ВМК МГУ\\
+{\darkgreen 6 мая 2015}}
+\begin{document}
+%---------------------------------------------------------------------------------------------------------------------------------------------------------01
+\frame{\titlepage}
+%---------------------------------------------------------------------------------------------------------------------------------------------------------02
+\frame{
+\frametitle {\LARGE \myfont Постановка задачи}
+\Large \myfont
+Пусть булева функция $f(\tilde x^n)$ задана набором $k$ своих нулей
+	$$(\alpha_{i1}, \ldots, \alpha_{in}),\,\, i = \overline{1,\,k}.$$
+Требуется построить ДНФ функции $f$ по возможности меньшей сложности.
+%про существующие подходы: метод Журавлёва-Когана, алгоритм Дьяконова
+%\vspace{10pt}\\
+%Совершенная конъюнктивная форма:
+%	$$
+%	f(\tilde x^n) = \bigwedge_{i = 1}^k (x_1^{\alpha_{i1}} \vee \ldots \vee %x_n^{\alpha_{in}}).
+%	$$
+%Число образованных конъюнкций : $n^k$.
+}
+
+\frame{
+\frametitle {\LARGE \myfont Схема синтеза ДНФ}
+\LARGE \myfont
+	\begin{enumerate}
+		\item
+		Построение ДНФ заданной функции, возможно, достаточно большой сложности\vspace{7pt}
+		\item
+		Получение по ней тупиковой ДНФ
+		\begin{enumerate}
+			\Large
+			\item
+			Порядок просматривания конъюнкций
+			\item
+			Проверка поглощения
+		\end{enumerate}
+	\end{enumerate}
+}
+
+\frame{
+\frametitle {\LARGE \myfont Метод разбиения на полосы}
+\Large \myfont
+Пусть задана матрица нулей $M$ функции $f.$ Разобьём множество строк $M$ на полосы:
+$$
+	M = \begin{bmatrix}
+			M_1\\ \hline
+			M_2\\ \hline
+			\vdots\\ \hline
+			M_r
+		\end{bmatrix}
+$$
+Для каждой полосы в отдельности строится соответствующая ей ДНФ $\mathcal{D}_i,$ и впоследствии они перемножаются.
+}
+
+\frame{
+\frametitle {\LARGE \myfont Проверка факта поглощения конъюнкции}
+\LARGE \myfont
+	Задана ДНФ $\mathcal{D}$ и конъюнкция $K.$ Требуется определить, поглощается ли $K$ данной ДНФ.
+	\Large
+	\begin{itemize}
+		\item
+		Поточечная проверка покрытия интервала, соответствующего конъюнкции $K$
+		\item
+		Применение критерия поглощения
+	\end{itemize}
+}
+
+\frame{
+\frametitle {\LARGE \myfont Критерий поглощения и алгоритм Блейка}
+\LARGE \myfont
+	Критерий поглощения: $\mathcal{D} \equiv 1$?\vspace{20pt}\\
+	Используем метод Блейка для получения сокращённой ДНФ.
+}
+
+\frame{
+\frametitle {\LARGE \myfont Оценки метода Блейка}
+\Large \myfont
+	\begin{table}
+		\centering
+		\begin{tabular}{|>{\centering\arraybackslash}m{2in}|>{\centering\arraybackslash}m{0.9in}|>{\centering\arraybackslash}m{0.9in}|}
+			\hline
+			\multirow{2}{*}{} & \multicolumn{2}{>{\centering\arraybackslash}m{2.0in}|}{Число переменных, встречающихся в ДНФ в обеих степенях}\tabularnewline
+			\cline{2-3}
+			& 1 & 2 \tabularnewline \hline
+			Оценка числа образованных конъюнкций в ходе метода Блейка & $\underline{O}(r^2)$ & $\underline{O}(2^r)$\tabularnewline \hline
+			Оценка числа новых конъюнкций в сокращённой ДНФ & $\underline{O}(r^2)$ & $\underline{O}(r^4)$\tabularnewline \hline
+		\end{tabular}
+	\end{table}
+}
+
+\frame{
+\frametitle {\LARGE \myfont Поиск нуля функции}
+\LARGE \myfont
+	Пусть функция $f$ задана своей ДНФ. Требуется найти хотя бы один ноль этой функции.\vspace{10pt}\\
+	\Large
+	\begin{enumerate}
+		\item
+		Подсчёт встречаемости каждой буквы в конъюнкциях ДНФ
+		\item
+		Упорядочение букв согласно некоторому функционалу
+		\item
+		Последовательное обнуление
+	\end{enumerate}
+}
+
+\frame{
+\frametitle {\LARGE \myfont Результаты}
+\Large \myfont
+	\begin{itemize}
+		\item
+		Предложен метод построения тупиковой ДНФ, основанный на разбиении матрицы нулей на полосы;
+		\item
+		Для конкретных случаев приведена верхняя оценка на число конъюнкций, образующихся в ходе метода Блейка и оставшихся в сокращённой ДНФ;
+		\item
+		Найдены отдельные случаи, когда критерий поглощения с методом Блейка эффективнее поточечной проверки покрытия интервала конъюнкции.
+	\end{itemize}
+}
+\end{document}
