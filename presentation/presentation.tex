@@ -88,6 +88,9 @@
 \def\mpl{m_{Pl}}
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{caption}[numbered]
+%\setbeamerfont{page number in head/foot}{size=\normalsize}
+\setbeamerfont{page number in head/foot}{size=\small}
+\setbeamertemplate{footline}[frame number]
 
 \newcolumntype{x}[1]{>{\centering\hspace{0pt}}p{#1}}
 
@@ -99,15 +102,18 @@
 %\author[shortname]{author1 \inst{1} \and author2 \inst{2}}
 \author[Д.\,А. Арбузова]
 {\large \myfont {\it Автор}: студент 517 группы\\ {\tcblue {Д.\,А. Арбузова}}\\
-{\it Научный руководитель}: д. ф.-м. н., академик РАН\\ {\tcblue {Ю.\,И. Журавлёв}}}
+{\it Научный руководитель}: д.\,ф.-м.\,н., академик РАН\\ {\tcblue {Ю.\,И. Журавлёв}}}
 %{\Large \myfont Научный руководитель:{\tcblue {Д. А. Арбузова}}}
 \institute[ВМК МГУ] % (optional)
 {\large ВМК МГУ}
 \date{\large %\myfont \large ВМК МГУ\\
-{\darkgreen 6 мая 2015}}
+{\tcblue {6 мая 2015}}}
 \begin{document}
+
 %---------------------------------------------------------------------------------------------------------------------------------------------------------01
-\frame{\titlepage}
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
 %---------------------------------------------------------------------------------------------------------------------------------------------------------02
 \frame{
 \frametitle {\LARGE \myfont Постановка задачи}
