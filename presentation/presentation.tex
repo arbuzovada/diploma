@@ -30,6 +30,7 @@
 \usepackage{multirow}
 \usepackage{array}
 \usepackage{graphicx}
+\usepackage{booktabs}
 %\usetheme{Rochester}
 \setbeamercolor{background canvas}{bg=green!0}
 \definecolor{colorone}{rgb}{0.0,0.35,0.35}
@@ -94,7 +95,11 @@
 
 \newcolumntype{x}[1]{>{\centering\hspace{0pt}}p{#1}}
 
+\newenvironment{lbmatrix}[1]
+  {\left[\array{@{}*{#1}{c}@{}}}
+  {\endarray\right]}
 
+\newcommand\myeq{\mathrel{\stackrel{\makebox[0pt]{\mbox{\normalfont\tiny ?}}}{\equiv}}}
 
 %\preauthor{\begin{flushright}\large \lineskip 0.5em}
 %\postauthor{\par\end{flushright}}
@@ -126,7 +131,7 @@
 \setlength\belowdisplayskip{5pt}
 	$$(\alpha_{i1}, \ldots, \alpha_{in}),\,\, i = \overline{1,\,k}.$$
 Требуется построить ДНФ функции $f$ по возможности меньшей сложности.\vspace{10pt}\\
-Совершенная конъюнктивная форма:
+Совершенная конъюнктивная нормальная форма:
 \setlength\abovedisplayskip{0pt}
 \setlength\belowdisplayskip{0pt}
 	$$
@@ -167,14 +172,14 @@
  \myfont
 Пусть задана матрица нулей $M$ функции $f.$ Разобьём множество строк $M$ на полосы:
 \setlength\abovedisplayskip{0pt}
-\setlength\belowdisplayskip{0pt}
+\setlength\belowdisplayskip{3pt}
 $$
-	M = \begin{bmatrix}
+	M = \begin{pmatrix}%{1}
 			M_1\\ \hline
 			M_2\\ \hline
 			\vdots\\ \hline
 			M_r
-		\end{bmatrix}
+		\end{pmatrix}
 $$
 Для каждой из подматриц $M_i, i=\overline{1,\,r},$ построим ДНФ $\mathcal{D}_i,$ соответствующую функции с такой матрицей нулей.\vspace{10pt}\\
 Исходная функция $f$ представима в виде
@@ -209,18 +214,22 @@ $$
 \frametitle {\LARGE \myfont Критерий поглощения и алгоритм Блейка}
 %\LARGE
  \myfont
- 	В ходе применения критерия поглощения возникает, вообще говоря, NP-полная задача определить, является ли полученная ДНФ тождественной единицей: $\mathcal{D}^2 = \bigvee\limits_{i} K^2_i \equiv^{?} 1.$\vspace{20pt}\\
-	Тем не менее, в некоторых случаях проверка выполнимости может быть достаточно эффективно решена с помощью алгоритма Блейка построения сокращённой ДНФ.\vspace{20pt}\\
+ 	В ходе применения критерия поглощения возникает NP-полная задача определить, является ли полученная ДНФ тождественной единицей: $\mathcal{D}^2 = \bigvee\limits_{i} K^2_i \myeq 1.$\vspace{10pt}\\
+	В некоторых случаях эта проверка может быть достаточно эффективно выполнена с помощью \textbf{\textit{алгоритма Блейка}} построения сокращённой ДНФ.
+	%\vspace{20pt}\\
+\begin{enumerate}
+		\item
+		Выполняются все обобщённые склеивания: $xK_1 \vee \bar{x}K_2 = xK_1 \vee \bar{x}K_2 \vee K_1K_2.$
+		\item
+		Выполняются все элементарные поглощения: $K_1 \vee K_1K_2 = K_1.$
+	\end{enumerate}\vspace{10pt}
 	Возможны две альтернативы:
 	\begin{enumerate}
 		\item
-		Сокращённая ДНФ равна 1 $\rightarrow \mathcal{D}^2 \equiv 1 \rightarrow$ поглощение есть
+		Сокращённая ДНФ равна 1 $\Rightarrow \mathcal{D}^2 \equiv 1 \Rightarrow$ поглощение есть.
 		\item
-		Сокращённая ДНФ отлична от 1  $\rightarrow \mathcal{D}^2 \not\equiv 1 \rightarrow$ поглощения нет
-
+		Сокращённая ДНФ отлична от 1  $\Rightarrow \mathcal{D}^2 \not\equiv 1 \Rightarrow$ поглощения нет.
 	\end{enumerate}
-	%Критерий поглощения: $\mathcal{D} \equiv 1$?\vspace{20pt}\\
-	%Используем метод Блейка для получения сокращённой ДНФ.
 }
 
 % где написать правило Блейка и в чём заключается метод Блейка?
@@ -229,7 +238,7 @@ $$
 \frametitle {\Large \myfont Оценки метода Блейка. Случай одной переменной}
 	Общий вид ДНФ:
 	$$
-		\mathcal{D} = \bigvee_{i = 1}^{t_1}xA_i \vee \bigvee_{i = 1}^{t_2}\bar{x}B_i  \vee \bigvee_iI_i.
+		\mathcal{D} = \bigvee_{i = 1}^{t_1}xA_i \vee \bigvee_{i = 1}^{t_2}\bar{x}B_i  \vee \bigvee_iC_i.
 	$$
 	Верхняя оценка числа новых конъюнкций в сокращённой ДНФ:
 	$$
@@ -266,8 +275,8 @@ $$
 }
 
 \frame{
-\frametitle {\LARGE \myfont Оценки метода Блейка}
-\Large \myfont
+\frametitle {\LARGE \myfont Оценки метода Блейка}\Large \myfont
+\vspace*{-5mm}
 	\begin{table}
 		\centering
 		\begin{tabular}{|>{\centering\arraybackslash}m{2in}|>{\centering\arraybackslash}m{0.9in}|>{\centering\arraybackslash}m{0.9in}|}
@@ -279,17 +288,18 @@ $$
 			Оценка числа новых конъюнкций в сокращённой ДНФ & $\underline{O}(r^2)$ & $\underline{O}(r^4)$\tabularnewline \hline
 		\end{tabular}
 	\end{table}
+	\normalsize $r$ --- длина исходной ДНФ
 }
 % показывает экспоненциальный рост даже при изначально небольшом количестве применений правила Блейка
 
 \frame{
 \frametitle {\LARGE \myfont Поиск нуля функции}
-\LARGE \myfont
-	Пусть функция $f$ задана своей ДНФ. Требуется найти хотя бы один ноль этой функции.\vspace{10pt}\\
+\Large \myfont
+	Пусть функция $f$ задана своей ДНФ. Требуется найти хотя бы один ноль этой функции.\vspace{5pt}\\
 	\Large
 	\begin{enumerate}
 		\item
-		Подсчёт встречаемости каждой буквы в конъюнкциях ДНФ
+		Подсчёт встречаемости каждой буквы в конъюнкциях ДНФ.
 		\item
 		Упорядочение букв согласно некоторому функционалу
 		\begin{itemize}
@@ -299,8 +309,9 @@ $$
 		весовая схема, основанная на встречаемости буквы и ранге содержащей её конъюнкции.
 		\end{itemize}
 		\item
-		Последовательное обнуление
-	\end{enumerate}
+		Последовательное обнуление букв и соответствующих конъюнкций.
+	\end{enumerate}\vspace{5pt}
+	Если в результате все конъюнкции оказались обнулены, то ноль функции найден.
 }
 
 \frame{
